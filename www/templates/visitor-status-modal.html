@@ -1,0 +1,21 @@
+<div>
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">Updating Visitor Status</h1>
+      <div class="button button-clear" ng-click="closeStatusModal()"><span class="icon ion-close"></span></div>
+    </ion-header-bar>
+    <ion-content has-bouncing="false">
+      <div class="list">
+        <ion-radio ng-repeat="contactStatus in contactStatuses"
+                   ng-value="contactStatus.status"
+                   ng-model="defaultContactStatus.status">
+          {{ contactStatus.status }}
+        </ion-radio>
+        <div class="item item-input-inset">
+          <button class="button button-block button-positive" ng-click="updateVisitorStatus(contactStatus.isChecked)">
+            Update
+          </button>
+        </div>
+      </div>
+    </ion-content>
+</div>
+

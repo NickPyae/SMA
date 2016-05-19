@@ -1,0 +1,37 @@
+<ion-view>
+    <ion-nav-title class="light">
+        Account Settings
+    </ion-nav-title>
+    <ion-nav-buttons side="right">
+      <button class="button button-clear button-light" ng-click="saveSettings()">
+        Save
+      </button>
+    </ion-nav-buttons>
+    <ion-content has-bouncing="false">
+        <div class="list card">
+                <ion-list>
+                    <label class="item item-input">
+                        <span class="input-label">User Name</span>
+                        <input type="text" ng-model="user.username">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label" >Password</span>
+                        <input type="password" ng-model="user.password">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label" >URL</span>
+                        <input type="text" ng-model="user.server">
+                    </label>
+                    <label class="item item-input assertive msg-validation" ng-show="validated === false">
+                        {{errorMsg}}
+                    </label>
+                </ion-list>
+
+                <ion-toggle ng-model="user.checked" toggle-class="toggle-calm">
+                  Enable HTTPS
+                </ion-toggle>
+            </div>
+    </ion-content>
+</ion-view>
+
+

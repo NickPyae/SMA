@@ -1,0 +1,117 @@
+{
+  "_args": [
+    [
+      "angular-chart.js",
+      "/Users/fedora/Desktop/Lobby Ambassador/SMARTLobby"
+    ]
+  ],
+  "_from": "angular-chart.js@latest",
+  "_id": "angular-chart.js@0.10.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/angular-chart.js",
+  "_nodeVersion": "5.10.1",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/angular-chart.js-0.10.0.tgz_1460759800219_0.8707602224312723"
+  },
+  "_npmUser": {
+    "email": "jtblin@gmail.com",
+    "name": "jtblin"
+  },
+  "_npmVersion": "3.8.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "angular-chart.js",
+    "raw": "angular-chart.js",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/angular-chart.js/-/angular-chart.js-0.10.0.tgz",
+  "_shasum": "66c9f2b4fae96331802cb78097bd834c8d5ccd8e",
+  "_shrinkwrap": null,
+  "_spec": "angular-chart.js",
+  "_where": "/Users/fedora/Desktop/Lobby Ambassador/SMARTLobby",
+  "author": {
+    "email": "jtblin@gmail.com",
+    "name": "Jerome Touffe-Blin"
+  },
+  "bugs": {
+    "url": "https://github.com/jtblin/angular-chart.js/issues"
+  },
+  "dependencies": {
+    "angular": "^1.4.5",
+    "chart.js": "^1.1.1"
+  },
+  "description": "An angular.js wrapper for Chart.js",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "chai-string": "^1.1.1",
+    "codeclimate-test-reporter": "^0.1.0",
+    "cp": "^0.2.0",
+    "gm": "^1.17.0",
+    "gulp": "^3.9.0",
+    "gulp-bump": "^1.0.0",
+    "gulp-csso": "^1.0.1",
+    "gulp-git": "^1.6.0",
+    "gulp-gzip": "^1.2.0",
+    "gulp-istanbul": "^0.10.3",
+    "gulp-istanbul-report": "^0.0.1",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jshint": "^1.9.2",
+    "gulp-less": "^3.0.3",
+    "gulp-mocha-phantomjs": "^0.10.1",
+    "gulp-rename": "^1.2.0",
+    "gulp-rimraf": "^0.2.0",
+    "gulp-sequence": "^0.4.1",
+    "gulp-shell": "^0.5.1",
+    "gulp-sourcemaps": "^1.0.0",
+    "gulp-spawn-mocha": "^2.0.1",
+    "gulp-tar": "^1.5.0",
+    "gulp-uglify": "^1.4.2",
+    "imgur-node-api": "^0.1.0",
+    "jshint-stylish": "^2.0.1",
+    "mkdirp": "^0.5.0",
+    "mocha": "^2.1.0",
+    "mocha-phantomjs-istanbul": "^0.0.2",
+    "sinon": "^1.12.2",
+    "sinon-chai": "^2.7.0",
+    "testatic": "^0.1.0",
+    "tmp-sync": "^1.1.0",
+    "webpack": "^1.12.0",
+    "webshot": "^0.16.0"
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "dist": {
+    "shasum": "66c9f2b4fae96331802cb78097bd834c8d5ccd8e",
+    "tarball": "https://registry.npmjs.org/angular-chart.js/-/angular-chart.js-0.10.0.tgz"
+  },
+  "gitHead": "80784d5a33653e3d36db44daafb0a2633580d68b",
+  "homepage": "https://github.com/jtblin/angular-chart.js#readme",
+  "license": "BSD-2-Clause",
+  "main": "dist/angular-chart.js",
+  "maintainers": [
+    {
+      "email": "jtblin@gmail.com",
+      "name": "jtblin"
+    }
+  ],
+  "name": "angular-chart.js",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jtblin/angular-chart.js.git"
+  },
+  "scripts": {
+    "test": "gulp check"
+  },
+  "version": "0.10.0"
+}

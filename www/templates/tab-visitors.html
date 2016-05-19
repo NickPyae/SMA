@@ -1,0 +1,74 @@
+<ion-view view-title="Visitors">
+  <ion-nav-buttons side="right">
+    <button class="button button-icon icon ion-android-refresh"
+            ng-click="refreshVisitors()">
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons>
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-android-more-vertical" ng-click="popover.show($event)">
+    </button>
+  </ion-nav-buttons>
+  <ion-content has-bouncing="false">
+    <ion-list>
+      <ion-item class="item-avatar item-icon-right visitor-info" ng-repeat="visitor in visitors" type="item-text-wrap"
+                 ng-click="goToItem(visitor.meetingID)">
+        <img ng-src="{{visitor.img}}">
+        <h2>{{visitor.name}}</h2>
+        <p>{{visitor.companyName}}</p>
+        <p>Checked in {{visitor.checkInDateTime}}</p>
+        <p>Hosted by {{visitor.hostName}}</p>
+        <p>{{visitor.checkInStatus}} &#8680; {{visitor.contactStatus}}</p>
+        <span class="visitor-status"
+              ng-style="{'background-color': getVisitorStatus(visitor)}"/>
+        </span>
+        <i ng-hide="visitor.meetingID !== 1" class="icon ion-chevron-right icon-accessory"></i>
+
+        <ion-option-button class="button-dark option-button" ng-click="call(visitor)">
+            <i class="icon ion-ios-telephone-outline"></i>
+            <span>Call</span>
+        </ion-option-button>
+        <ion-option-button class="button-calm option-button" ng-click="voip(visitor)">
+            <i class="icon ion-social-whatsapp-outline"></i>
+            <span>VoIP</span>
+        </ion-option-button>
+        <ion-option-button class="button-positive option-button" ng-click="updateStatus(visitor)">
+            <i class="icon ion-ios-compose-outline"></i>
+            <span>Status</span>
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+    <div ng-if="!visitors.length" class="no-results">
+      <p>{{searchResult}}</p>
+    </div>
+  </ion-content>
+</ion-view>
+
+<script id="templates/popover.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-content>
+      <div class="list">
+        <ion-checkbox ng-repeat="filter in filters"
+                   ng-model="filter.isChecked">
+          {{ filter.status }}
+      </div>
+    </ion-content>
+  </ion-popover-view>
+</script>
+
+<script id="templates/voip-popup.html" type="text/ng-template">
+  <div class="list-borderless">
+    <ion-list>
+      <ion-radio ng-repeat="voipService in voipServices"
+                 ng-value="voipService.type"
+                 ng-model="defaultVoIPService.type">
+        {{ voipService.type }}
+      </ion-radio>
+    </ion-list>
+  </div>
+</script>
+
+

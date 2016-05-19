@@ -1,0 +1,80 @@
+<ion-view view-title="Daily Report">
+  <!--<ion-nav-buttons side="right">-->
+    <!--<button class="button button-icon" ng-click="toggle()">-->
+      <!--<i class="icon ion-ios-toggle" ng-class="isToggled ? 'dark' : 'light'"></i>-->
+    <!--</button>-->
+  <!--</ion-nav-buttons>-->
+  <ion-content has-bouncing="false">
+    <div class="list">
+      <div class="card">
+        <div class="item item-divider item-divider-background">
+          <span>Visitor Status</span>
+        </div>
+        <div class="item item-text-wrap">
+          <!-- Ionic Grid -->
+          <div class ="row">
+            <!-- Checked in visitors -->
+            <div class ="col">
+              <div class="row">
+                    <h1>124</h1>
+              </div>
+              <div class="row">
+                    <h3>Visitors from 89 companies checked in</h3>
+              </div>
+            </div>
+            <!-- Not checked out visitors -->
+            <div class ="col">
+              <div class="row">
+                   <h1>24</h1>
+              </div>
+              <div class="row">
+                    <h3>Visitors from 19 companies not checked out</h3>
+              </div>
+            </div>
+          </div>
+          <div class ="row">
+            <!-- No. of hosts involved -->
+            <div class ="col">
+              <div class="row">
+                <h1>12</h1>
+              </div>
+              <div class="row">
+                <h3>Hosts from 12 companies</h3>
+              </div>
+            </div>
+            <!-- No. of visitors still in office -->
+            <div class ="col">
+              <div class="row">
+                <h1>30</h1>
+              </div>
+              <div class="row">
+                <h3>Visitors still in office</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-divider item-divider-background">
+          <span>Visitor Status</span>
+        </div>
+
+        <div class="item item-text-wrap">
+          <canvas id="base" class="chart-base" chart-type="type"
+                  chart-data="data" chart-labels="labels" chart-legend="true" chart-click="onClick">
+          </canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-divider item-divider-background">
+          <span>Visitor Status</span>
+        </div>
+        <div class="item item-text-wrap">
+          <canvas id="line" class="chart chart-line" chart-data="linedata" chart-labels="linelabels" chart-legend="true" chart-series="lineseries">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
+

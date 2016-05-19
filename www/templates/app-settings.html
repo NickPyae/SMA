@@ -1,0 +1,37 @@
+<ion-view>
+	<ion-nav-title class="light">
+		App Settings
+	</ion-nav-title>
+	<ion-nav-buttons side="right">
+    <button class="button button-clear button-light" ng-click="saveSettings()">
+      Save
+    </button>
+	</ion-nav-buttons>
+    <ion-content has-bouncing="false">
+
+		  <div class="list card">
+         	<li class="item item-input-inset item-select">
+			    <div class="input-label">
+			      VoIP Service
+			    </div>
+            <select ng-options="item.label for item in items
+            track by item.id"
+                    ng-model="selectedItem">
+
+            </select>
+			    </li>
+      </div>
+      <div class="list card">
+        <li class="item item-input-inset item-select">
+          <div class="input-label">
+            Mode
+          </div>
+          <select ng-options="mode.label for mode in modes
+            track by mode.id"
+                  ng-model="selectedMode">
+
+          </select>
+        </li>
+      </div>
+    </ion-content>
+  </ion-view>

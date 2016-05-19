@@ -1,0 +1,183 @@
+/** Remove iOS scrollbar indicator */
+.scroll-bar-indicator {
+  display: none !important;
+}
+
+/* Overwrite android ionic-filter-bar border-bottom */
+.platform-android .filter-bar .filter-bar-positive .item-input-wrapper {
+  border-bottom: 1px solid white;
+  background: #387ef5;
+}
+
+.bar-positive {
+  background-image: none !important;
+}
+
+.login-background {
+  background-color: #4b8bf4;
+}
+
+.item-divider-background {
+  background-color: #387ef5;
+}
+
+.option-button span {
+  margin-top: 46px;
+}
+
+.item-stacked-label span {
+  color: white;
+}
+
+.item-divider-background span {
+  color: white;
+}
+
+.visitor-status {
+  display: block;
+  position: absolute;
+  left: 15px;
+  top: 60px;
+  width: 40px;
+  height: 4px;
+  border-radius: 5px;
+}
+
+.visitor-info p {
+  font-size: 0.73em;
+}
+
+.roomDetail-card {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  width: 54%;
+  margin: 0px;
+}
+
+.roomDetail-card .item {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+.roomDetail-card .item p, .roomDetail-card .item h1 {
+  color: white;
+}
+
+.roomDetail-card .item-text-wrap {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.roomDetail-card .item h1 {
+  font-size: 1.8em;
+}
+
+.room-img {
+  width: 100%;
+  height: 100%;
+}
+
+.no-results {
+  color: gray;
+  font-size: 24px;
+  padding: 50px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/** ion-scroll height for 5-inch and above devices */
+.available-attendees-height {
+  margin: 0px;
+  height: 190px;
+}
+
+/** iPhone < 5: */
+@media screen and (device-aspect-ratio: 2/3) {
+  .available-attendees-height {
+    margin: 0px;
+    height: 130px;
+  }
+}
+
+/** iPhone 5 & 5s: */
+@media screen and (device-aspect-ratio: 40/71) {
+  .available-attendees-height {
+    margin: 0px;
+    height: 170px;
+  }
+}
+
+/** iPhone 6 */
+@media screen and (device-aspect-ratio: 375/667) {
+  .available-attendees-height {
+    margin: 0px;
+    height: 190px;
+  }
+}
+
+/** iPhone 6 Plus */
+@media only screen
+and (min-device-width : 414px)
+and (max-device-width : 736px)
+and (device-width : 414px)
+and (device-height : 736px)
+and (orientation : portrait)
+and (-webkit-min-device-pixel-ratio : 3)
+and (-webkit-device-pixel-ratio : 3) {
+
+  .available-attendees-height {
+    margin: 0px;
+    height: 240px;
+  }
+}
+
+/** Set radio check mark on left */
+.item-radio .item-content{
+  padding-left: 64px !important;
+  padding-right: 16px !important;
+}
+
+.item-radio .radio-icon {
+  left:0 !important;
+}
+
+/** Overwrite default radio button checkmark with custom design */
+.radio-icon{ visibility: visible !important;}
+
+.radio-icon:before {
+  content:"" !important;
+  border:2px solid #0c60ee !important;
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 50% !important;
+  overflow:hidden !important;
+}
+
+.radio-icon:after {
+  left:0 !important;
+  content:"" !important;
+  position: absolute !important;
+  right: 20px !important;
+  top: 22px !important;
+  left: 20px !important;;
+  background:#0c60ee !important;
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  overflow:hidden !important;
+
+  transition: -webkit-transform .28s cubic-bezier(0.420, 0.000, 0.000, 1.650);
+  transition: transform .28s cubic-bezier(0.420, 0.000, 0.000, 1.650);
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+.item-radio input:checked + .radio-content .radio-icon:after {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+/** Overwrite default popover height */
+.popover  {
+  height: 240px;
+}
