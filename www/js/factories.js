@@ -11,11 +11,12 @@ angular.module('SMARTLobby.factories', [])
       this.hostName = hostName;
       this.hostNumber = hostNumber;
       this.img = img || 'img/visitor.png';
-      this.checkInStatus = checkInStatus || 'Checked in';
+      this.checkInStatus = null;
       this.contactStatus = contactStatus || 'Uncontacted';
       this.contact_1 = contact_1;
       this.contact_2 = contact_2;
       this.meetingID = meetingID;
+      this.isChecked = false;
     }
 
     function Host(companyName, name, contact_1, contact_2, img, checkInDateTime) {
@@ -96,4 +97,24 @@ angular.module('SMARTLobby.factories', [])
       }
     };
   })
+  .factory('TimerFactory', ['$http', '$q', function ($http, $q) {
+    var deferred = $q.defer();
+
+    var timerFactory = {};
+
+    timerFactory.getStats = function () {
+      $http.get('./test/stats.json')
+        .success(function (data, status) {
+          deferred.resolve(data);
+
+        })
+        .error(function (data, status) {
+          deferred.reject(data);
+        });
+
+      return deferred.promise;
+    };
+
+    return timerFactory;
+  }])
 

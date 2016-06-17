@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in factories.js
 // 'starter.controllers' is found in controllers.js
-angular.module('SMARTLobby', ['ionic', 'chart.js', 'jett.ionic.filter.bar', 'LocalStorageModule',
+angular.module('SMARTLobby', ['ionic', 'ionic-toast', 'jett.ionic.filter.bar', 'LocalStorageModule',
   'SMARTLobby.controllers', 'SMARTLobby.factories', 'SMARTLobby.services',
   'SMARTLobby.directives', 'SMARTLobby.constants'])
 
@@ -26,7 +26,7 @@ angular.module('SMARTLobby', ['ionic', 'chart.js', 'jett.ionic.filter.bar', 'Loc
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider,
-                 $ionicFilterBarConfigProvider, ChartJsProvider, localStorageServiceProvider) {
+                 $ionicFilterBarConfigProvider, localStorageServiceProvider) {
 
 
   // Global local storage settings
@@ -34,6 +34,12 @@ angular.module('SMARTLobby', ['ionic', 'chart.js', 'jett.ionic.filter.bar', 'Loc
     .setPrefix('SMARTLobby')
     .setStorageType('localStorage')
     .setNotify(true, true);
+
+  // Disable iOS swipe back
+  $ionicConfigProvider.views.swipeBackEnabled(false);
+
+  // Tabs position bottom for both iOS and android
+  $ionicConfigProvider.tabs.position('bottom');
 
   // Enable native scrolling in android as well as removing scrollbar indicator
   $ionicConfigProvider.scrolling.jsScrolling(true);
@@ -43,19 +49,6 @@ angular.module('SMARTLobby', ['ionic', 'chart.js', 'jett.ionic.filter.bar', 'Loc
 
   // Search bar transition horizontally from right to left
   $ionicFilterBarConfigProvider.transition('horizontal');
-
-  // Configure all charts
-  ChartJsProvider.setOptions({
-    colours: ['#736F6E', '#FF0000', '#FFC200', '#008000'],
-    responsive: true
-  });
-
-  // Configure all line charts
-  ChartJsProvider.setOptions('Line', {
-    colours: ['#FFC200', '#008000'],
-    responsive: true
-  });
-
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -79,7 +72,7 @@ angular.module('SMARTLobby', ['ionic', 'chart.js', 'jett.ionic.filter.bar', 'Loc
   // Each tab has its own nav history stack:
   .state('tab.dash', {
     url: '/dash',
-    cache: false,
+    cache: true,
     views: {
       'tab-dash': {
         templateUrl: 'templates/tab-dash.html',
@@ -89,8 +82,8 @@ angular.module('SMARTLobby', ['ionic', 'chart.js', 'jett.ionic.filter.bar', 'Loc
   })
 
   .state('tab.visitors', {
-      url: '/visitors/:status',
-      cache: false,
+      url: '/visitors',
+      cache: true, // do not refresh UI state
       views: {
         'tab-visitors': {
           templateUrl: 'templates/tab-visitors.html',

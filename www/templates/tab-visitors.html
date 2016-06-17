@@ -1,47 +1,87 @@
 <ion-view view-title="Visitors">
-  <ion-nav-buttons side="right">
-    <button class="button button-icon icon ion-android-refresh"
-            ng-click="refreshVisitors()">
+  <ion-nav-buttons side="left">
+    <button class="button button-icon icon ion-android-more-vertical" ng-click="popover.show($event)">
     </button>
-  </ion-nav-buttons>
-  <ion-nav-buttons>
     <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
     </button>
   </ion-nav-buttons>
-  <ion-nav-buttons side="secondary">
-    <button class="button button-icon icon ion-android-more-vertical" ng-click="popover.show($event)">
+  <ion-nav-buttons side="right">
+    <button class="button button-outline button-light"
+            ng-click="toggleMode()">
+      {{mode}}
     </button>
   </ion-nav-buttons>
+
   <ion-content has-bouncing="false">
-    <ion-list>
-      <ion-item class="item-avatar item-icon-right visitor-info" ng-repeat="visitor in visitors" type="item-text-wrap"
-                 ng-click="goToItem(visitor.meetingID)">
-        <img ng-src="{{visitor.img}}">
-        <h2>{{visitor.name}}</h2>
-        <p>{{visitor.companyName}}</p>
-        <p>Checked in {{visitor.checkInDateTime}}</p>
-        <p>Hosted by {{visitor.hostName}}</p>
-        <p>{{visitor.checkInStatus}} &#8680; {{visitor.contactStatus}}</p>
+    <ion-list can-swipe="true" swipe-direction="both">
+
+      <div ng-repeat="group in groups">
+        <div class="item divider-height"
+             ng-class="{active: group.isShown}">
+
+          <div ng-click="toggleGroup(group)" >
+            <button class="divider-left-icon button button-icon icon" ng-class="group.isShown ? 'ion-ios-plus' : 'ion-ios-minus'">
+            </button>
+            <span class="divider-title">{{group.name}}</span>
+          </div>
+
+          <button class="button button-icon icon ion-iphone" style="position: absolute; right: 90px; bottom: -2px;" ng-click="callHost()">
+          </button>
+
+          <button class="button button-icon icon ion-chatboxes" style="position: absolute; right: 50px; bottom: -2px;" ng-click="bulkMessage()">
+          </button>
+
+          <button class="button button-icon icon ion-compose" style="position: absolute; right: 10px; bottom: -2px;" ng-click="updateAllVisitorsStatuses()">
+          </button>
+        </div>
+
+        <ion-item class="item-icon-right visitor-info"
+                  type="item-text-wrap"
+                  ng-repeat="visitor in group.visitors"
+                  ng-click="goToItem(visitor.meetingID)"
+                  ng-show="group.isShown">
+          <div click-to-reveal-option-component class="div-click-content">
+
+          </div>
+          <h2>{{visitor.name}}</h2>
+
+          <p>{{visitor.companyName}}</p>
+
+          <p>Checked in at {{visitor.checkInDateTime}}</p>
+
+          <p>Contact Status &#8680; {{visitor.contactStatus}}</p>
         <span class="visitor-status"
               ng-style="{'background-color': getVisitorStatus(visitor)}"/>
-        </span>
-        <i ng-hide="visitor.meetingID !== 1" class="icon ion-chevron-right icon-accessory"></i>
+          </span>
+          <i ng-hide="visitor.meetingID !== 1" class="icon ion-chevron-right icon-accessory"></i>
 
-        <ion-option-button class="button-dark option-button" ng-click="call(visitor)">
+          <ion-option-button class="button option-button ion-option-button-background-color" side="left">
+            <ion-checkbox class="ion-option-checkbox" ng-model="visitor.isChecked">
+            </ion-checkbox>
+          </ion-option-button>
+
+          <ion-option-button class="button-dark option-button" side="right"
+                             ng-click="call(visitor)">
             <i class="icon ion-ios-telephone-outline"></i>
             <span>Call</span>
-        </ion-option-button>
-        <ion-option-button class="button-calm option-button" ng-click="voip(visitor)">
+          </ion-option-button>
+          <ion-option-button class="button-positive option-button" side="right"
+                             ng-click="voip(visitor)">
             <i class="icon ion-social-whatsapp-outline"></i>
             <span>VoIP</span>
-        </ion-option-button>
-        <ion-option-button class="button-positive option-button" ng-click="updateStatus(visitor)">
-            <i class="icon ion-ios-compose-outline"></i>
-            <span>Status</span>
-        </ion-option-button>
-      </ion-item>
+          </ion-option-button>
+          <ion-option-button class="button-royal option-button" side="right"
+                             ng-click="checkout(visitor)">
+            <i class="icon ion-log-out" style="right: 30px;"></i>
+            <span>Checkout</span>
+          </ion-option-button>
+        </ion-item>
+      </div>
+
     </ion-list>
-    <div ng-if="!visitors.length" class="no-results">
+
+
+    <div ng-if="!groups[0].visitors.length" class="no-results">
       <p>{{searchResult}}</p>
     </div>
   </ion-content>
@@ -52,7 +92,7 @@
     <ion-content>
       <div class="list">
         <ion-checkbox ng-repeat="filter in filters"
-                   ng-model="filter.isChecked">
+                      ng-model="filter.isChecked">
           {{ filter.status }}
       </div>
     </ion-content>
@@ -70,5 +110,6 @@
     </ion-list>
   </div>
 </script>
+
 
 

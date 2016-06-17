@@ -1,0 +1,18 @@
+ [
+  {
+  "name": "Callers in Queue",
+  "value": "3"
+  },
+  {
+  "name": "Calls Handled",
+  "value": "105"
+  },
+  {
+  "name": "Average",
+  "value": "2:03"
+  },
+  {
+  "name": "Longest",
+  "value": "5:12"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "name": "ionic-toast",
+  "version": "0.2.1",
+  "description": "A toast for IONIC framework",
+  "main": [
+    "./dist/ionic-toast.bundle.min.js",
+    "./dist/style.css"
+  ],
+  "scripts": {},
+  "author": "https://github.com/rajeshwarpatlolla, rajeshwar.patlolla@gmail.com",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+  }
+}

@@ -4,11 +4,13 @@ var APP_CONFIG =
   CONTACT_STATUS: {
     UNCONTACTED: 'Uncontacted',
     NO_REPLY: 'No Reply',
+    VACATING: 'Vacating',
+    EVACUATED: ' Evacuated',
     IN_BUILDING: 'In Building',
     LEFT_BUILDING: 'Left Building'
   },
   MODE: {
-    DEFAULT: 'Peace Time',
+    DEFAULT: 'Normal',
     EMERGENCY: 'Emergency'
   },
   VOIP_SERVICE: {

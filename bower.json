@@ -1,10 +1,11 @@
 {
-  "name": "HelloIonic",
+  "name": "SMARTLobby",
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.2.4"
   },
   "dependencies": {
-    "angular-local-storage": "^0.2.7"
+    "angular-local-storage": "^0.2.7",
+    "Chart.js": "2.1.5"
   }
 }

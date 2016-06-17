@@ -1,6 +1,6 @@
 <div>
     <ion-header-bar class="bar-positive">
-      <h1 class="title">Updating Visitor Status</h1>
+      <h1 class="title">Updating visitor status</h1>
       <div class="button button-clear" ng-click="closeStatusModal()"><span class="icon ion-close"></span></div>
     </ion-header-bar>
     <ion-content has-bouncing="false">
@@ -11,7 +11,10 @@
           {{ contactStatus.status }}
         </ion-radio>
         <div class="item item-input-inset">
-          <button class="button button-block button-positive" ng-click="updateVisitorStatus(contactStatus.isChecked)">
+          <label class="item-input-wrapper">
+            <input type="text" placeholder="Remarks">
+          </label>
+          <button class="button button-small button-positive" ng-click="updateVisitorStatus(contactStatus.isChecked)">
             Update
           </button>
         </div>
