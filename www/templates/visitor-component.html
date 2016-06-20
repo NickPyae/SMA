@@ -1,0 +1,13 @@
+<h2>{{visitor.name}}</h2>
+
+<p>{{visitor.companyName}}</p>
+
+<p>Checked in at {{visitor.checkInDateTime}}</p>
+
+<p>Contact Status &#8680; {{visitor.contactStatus}}</p>
+<span class="visitor-status"
+      ng-style="{'background-color': getVisitorStatus(visitor)}"/>
+</span>
+
+<i ng-hide="visitor.meetingID !== 1" class="icon ion-chevron-right icon-accessory"></i>
+

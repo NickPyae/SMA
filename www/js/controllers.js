@@ -58,8 +58,18 @@ angular.module('SMARTLobby.controllers', [])
 
       if ($scope.mode === APP_CONFIG.MODE.DEFAULT) {
 
-        var confirmPopup = $ionicPopup.confirm({
+        var confirmPopup = $ionicPopup.show({
           title: 'Activating ' + APP_CONFIG.MODE.EMERGENCY + ' mode',
+          buttons: [
+            {text: 'Cancel'},
+            {
+              text: 'OK',
+              type: 'button-dark',
+              onTap: function() {
+                  return APP_CONFIG.MODE.EMERGENCY;
+              }
+            }
+          ],
           template: 'Are you sure you want to activate ' + APP_CONFIG.MODE.EMERGENCY + ' mode?'
         });
 
@@ -83,7 +93,7 @@ angular.module('SMARTLobby.controllers', [])
             AppModeService.setMode($scope.mode);
 
             // Updating tabs and navbar color
-            AppColorThemeService.setAppColorTheme('bar-assertive', 'tabs-assertive');
+            AppColorThemeService.setAppColorTheme(APP_CONFIG.THEME.BAR_EMERGENCY, APP_CONFIG.THEME.TABS_EMERGENCY);
 
           } else {
             // Clear sec and timer
@@ -95,7 +105,7 @@ angular.module('SMARTLobby.controllers', [])
             AppModeService.setMode($scope.mode);
 
             // Updating tabs and navbar color
-            AppColorThemeService.setAppColorTheme('bar-positive', 'tabs-positive');
+            AppColorThemeService.setAppColorTheme(APP_CONFIG.THEME.BAR_DEFAULT, APP_CONFIG.THEME.TABS_DEFAULT);
           }
         });
 
@@ -111,7 +121,7 @@ angular.module('SMARTLobby.controllers', [])
         AppModeService.setMode($scope.mode);
 
         // Updating tabs and navbar color
-        AppColorThemeService.setAppColorTheme('bar-positive', 'tabs-positive');
+        AppColorThemeService.setAppColorTheme(APP_CONFIG.THEME.BAR_DEFAULT, APP_CONFIG.THEME.TABS_DEFAULT);
       }
 
     };
@@ -125,7 +135,7 @@ angular.module('SMARTLobby.controllers', [])
 
       TimerService.setTimer({timer: $scope.timer, sec: $scope.sec});
 
-      console.log(TimerService.getTimer());
+      //console.log(TimerService.getTimer());
     };
 
   })
@@ -147,13 +157,6 @@ angular.module('SMARTLobby.controllers', [])
         $scope.mode = AppModeService.getMode();
       }
 
-      // Filter visitors depending on the pie chart legend selection
-      var contactStatus = ContactStatusService.getContactStatus();
-
-      if (contactStatus) {
-        filterVisitorsByStatus(contactStatus);
-      }
-
       if ($scope.mode === APP_CONFIG.MODE.DEFAULT) {
         $scope.contactStatuses = VisitorStatusService.getNormalContactStatuses();
 
@@ -164,6 +167,12 @@ angular.module('SMARTLobby.controllers', [])
         $scope.filters = VisitorStatusService.getEmergencyContactStatusFilters();
       }
 
+      // Filter visitors depending on the pie chart legend selection
+      var contactStatus = ContactStatusService.getContactStatus();
+
+      if (contactStatus) {
+        filterVisitorsByStatus(contactStatus);
+      }
     });
 
 
@@ -229,8 +238,18 @@ angular.module('SMARTLobby.controllers', [])
       if ($scope.mode === APP_CONFIG.MODE.DEFAULT) {
 
 
-        var confirmPopup = $ionicPopup.confirm({
+        var confirmPopup = $ionicPopup.show({
           title: 'Activating ' + APP_CONFIG.MODE.EMERGENCY + ' mode',
+          buttons: [
+            {text: 'Cancel'},
+            {
+              text: 'OK',
+              type: 'button-dark',
+              onTap: function() {
+                return APP_CONFIG.MODE.EMERGENCY;
+              }
+            }
+          ],
           template: 'Are you sure you want to activate ' + APP_CONFIG.MODE.EMERGENCY + ' mode?'
         });
 
@@ -252,7 +271,7 @@ angular.module('SMARTLobby.controllers', [])
             $scope.filters = VisitorStatusService.getEmergencyContactStatusFilters();
 
             // Updating tabs and navbar color
-            AppColorThemeService.setAppColorTheme('bar-assertive', 'tabs-assertive');
+            AppColorThemeService.setAppColorTheme(APP_CONFIG.THEME.BAR_EMERGENCY, APP_CONFIG.THEME.TABS_EMERGENCY);
 
           } else {
             // Clear sec and timer
@@ -268,7 +287,7 @@ angular.module('SMARTLobby.controllers', [])
             $scope.filters = VisitorStatusService.getNormalContactStatusFilters();
 
             // Updating tabs and navbar color
-            AppColorThemeService.setAppColorTheme('bar-positive', 'tabs-positive');
+            AppColorThemeService.setAppColorTheme(APP_CONFIG.THEME.BAR_DEFAULT, APP_CONFIG.THEME.TABS_DEFAULT);
           }
         });
 
@@ -288,7 +307,7 @@ angular.module('SMARTLobby.controllers', [])
         $scope.filters = VisitorStatusService.getNormalContactStatusFilters();
 
         // Updating tabs and navbar color
-        AppColorThemeService.setAppColorTheme('bar-positive', 'tabs-positive');
+        AppColorThemeService.setAppColorTheme(APP_CONFIG.THEME.BAR_DEFAULT, APP_CONFIG.THEME.TABS_DEFAULT);
       }
 
     };
@@ -302,7 +321,7 @@ angular.module('SMARTLobby.controllers', [])
 
       TimerService.setTimer({timer: $scope.timer, sec: $scope.sec});
 
-      console.log(TimerService.getTimer());
+      //console.log(TimerService.getTimer());
     };
 
     function clearTimer() {
@@ -336,10 +355,10 @@ angular.module('SMARTLobby.controllers', [])
 
       Visitors.getAllVisitors().then(function (visitors) {
 
-        //var sortedVisitors = sortVisitorsByName(visitors);
+        var sortedVisitors = sortVisitorsByName(visitors);
 
-        $scope.visitors = visitors;
-        $scope.allVisitors = visitors;
+        $scope.visitors = sortedVisitors;
+        $scope.allVisitors = sortedVisitors;
 
         if (visitors && visitors.length) {
           groupVisitors($scope.visitors);
@@ -385,8 +404,7 @@ angular.module('SMARTLobby.controllers', [])
           }
         });
 
-        //$scope.groups[0].visitors = sortVisitorsByName(filterVisitors);
-        $scope.groups = groupFilteredVisitors(filterVisitors);
+        $scope.groups = groupFilteredVisitors(sortVisitorsByName(filterVisitors));
       }, true);
     }
 
@@ -415,6 +433,12 @@ angular.module('SMARTLobby.controllers', [])
       } else {
         $ionicPopup.alert({
           title: 'Meeting Detail',
+          buttons: [
+            {
+              text: 'OK',
+              type: 'button-dark'
+            }
+          ],
           template: 'This visitor does not have any meeting detail.'
         });
       }
@@ -451,7 +475,7 @@ angular.module('SMARTLobby.controllers', [])
           },
           {
             text: 'OK',
-            type: 'button-positive',
+            type: 'button-dark',
             onTap: function (event) {
               return $scope.defaultVoIPService.type;
             }
@@ -477,8 +501,18 @@ angular.module('SMARTLobby.controllers', [])
     };
 
     $scope.checkout = function (visitor) {
-      var confirmPopup = $ionicPopup.confirm({
+      var confirmPopup = $ionicPopup.show({
         title: 'Checking out Visitor',
+        buttons: [
+          {text: 'Cancel'},
+          {
+            text: 'OK',
+            type: 'button-dark',
+            onTap: function() {
+              return true;
+            }
+          }
+        ],
         template: 'Are you sure you want to check out this visitor?'
       });
 
@@ -529,8 +563,7 @@ angular.module('SMARTLobby.controllers', [])
         items: $scope.visitors,
         update: function (filteredItems) {
           console.log(filteredItems);
-          //$scope.groups[0].visitors = sortVisitorsByName(filteredItems);
-          $scope.groups = groupFilteredVisitors(filteredItems);
+          $scope.groups = groupFilteredVisitors(sortVisitorsByName(filteredItems));
 
           // Show this text when no room is found
           if(!filteredItems.length) {
@@ -714,7 +747,7 @@ angular.module('SMARTLobby.controllers', [])
                   },
                   {
                     text: 'OK',
-                    type: 'button-positive',
+                    type: 'button-dark',
                     onTap: function (event) {
                       return $scope.defaultVoIPService.type;
                     }
@@ -754,8 +787,18 @@ angular.module('SMARTLobby.controllers', [])
               };
               break;
             case 3:
-              var confirmPopup = $ionicPopup.confirm({
+              var confirmPopup = $ionicPopup.show({
                 title: 'Checking out Visitor',
+                buttons: [
+                  {text: 'Cancel'},
+                  {
+                    text: 'OK',
+                    type: 'button-dark',
+                    onTap: function() {
+                      return true;
+                    }
+                  }
+                ],
                 template: 'Are you sure you want to check out this visitor?'
               });
 
@@ -798,8 +841,18 @@ angular.module('SMARTLobby.controllers', [])
 
       if ($scope.mode === APP_CONFIG.MODE.DEFAULT) {
 
-        var confirmPopup = $ionicPopup.confirm({
+        var confirmPopup = $ionicPopup.show({
           title: 'Activating ' + APP_CONFIG.MODE.EMERGENCY + ' mode',
+          buttons: [
+            {text: 'Cancel'},
+            {
+              text: 'OK',
+              type: 'button-dark',
+              onTap: function() {
+                return APP_CONFIG.MODE.EMERGENCY;
+              }
+            }
+          ],
           template: 'Are you sure you want to activate ' + APP_CONFIG.MODE.EMERGENCY + ' mode?'
         });
 
@@ -817,7 +870,7 @@ angular.module('SMARTLobby.controllers', [])
             AppModeService.setMode($scope.mode);
 
             // Updating tabs and navbar color
-            AppColorThemeService.setAppColorTheme('bar-assertive', 'tabs-assertive');
+            AppColorThemeService.setAppColorTheme(APP_CONFIG.THEME.BAR_EMERGENCY, APP_CONFIG.THEME.TABS_EMERGENCY);
 
           } else {
             // Clear sec and timer
@@ -829,7 +882,7 @@ angular.module('SMARTLobby.controllers', [])
             AppModeService.setMode($scope.mode);
 
             // Updating tabs and navbar color
-            AppColorThemeService.setAppColorTheme('bar-positive', 'tabs-positive');
+            AppColorThemeService.setAppColorTheme(APP_CONFIG.THEME.BAR_DEFAULT, APP_CONFIG.THEME.TABS_DEFAULT);
           }
         });
 
@@ -845,7 +898,7 @@ angular.module('SMARTLobby.controllers', [])
         AppModeService.setMode($scope.mode);
 
         // Updating tabs and navbar color
-        AppColorThemeService.setAppColorTheme('bar-positive', 'tabs-positive');
+        AppColorThemeService.setAppColorTheme(APP_CONFIG.THEME.BAR_DEFAULT, APP_CONFIG.THEME.TABS_DEFAULT);
       }
 
     };
@@ -860,7 +913,7 @@ angular.module('SMARTLobby.controllers', [])
 
       TimerService.setTimer({timer: $scope.timer, sec: $scope.sec});
 
-      console.log(TimerService.getTimer());
+      //console.log(TimerService.getTimer());
     };
 
 
@@ -878,7 +931,7 @@ angular.module('SMARTLobby.controllers', [])
       clearTimer(true);
 
       // Reset tabs and navbar color to default
-      AppColorThemeService.setAppColorTheme('bar-positive', 'tabs-positive');
+      AppColorThemeService.setAppColorTheme(APP_CONFIG.THEME.BAR_DEFAULT, APP_CONFIG.THEME.TABS_DEFAULT);
 
       // Reset mode to default
       AppModeService.setMode(APP_CONFIG.MODE.DEFAULT);

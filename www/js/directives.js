@@ -1,4 +1,19 @@
 angular.module('SMARTLobby.directives', [])
+  .directive('visitorStatsComponent',function() {
+    return {
+      templateUrl: 'templates/visitor-stats-component.html'
+    };
+  })
+  .directive('visitorComponent',function() {
+    return {
+      templateUrl: 'templates/visitor-component.html'
+    };
+  })
+  .directive('visitorDividerComponent',function() {
+    return {
+      templateUrl: 'templates/visitor-divider-component.html'
+    };
+  })
   .directive('clickToRevealOptionComponent', function () {
     return {
       restrict: 'A',
@@ -121,7 +136,6 @@ angular.module('SMARTLobby.directives', [])
           }
         });
 
-
         var pieChartConfig = {
           type: 'pie',
           data: {
@@ -155,11 +169,9 @@ angular.module('SMARTLobby.directives', [])
             legend: {
               position: 'top',
               onClick: function (event, legendItem) {
-                console.log(event);
-                console.log(legendItem);
-
-                ContactStatusService.setContactStatus(legendItem.text);
-                $state.go('tab.visitors');
+              },
+              labels: {
+                fontSize: 9
               }
             },
             showNumberOnSlice: true
@@ -169,6 +181,25 @@ angular.module('SMARTLobby.directives', [])
 
         var pieChartCanvas = document.getElementById('pieChart').getContext('2d');
         var pieChart = new Chart(pieChartCanvas, pieChartConfig);
+
+        document.getElementById('pieChart').onclick = function(evt)
+        {
+          var activePoints = pieChart.getElementsAtEvent(evt);
+
+          if(activePoints.length > 0)
+          {
+            //get the internal index of slice in pie chart
+            var clickedElementindex = activePoints[0]['_index'];
+
+            //get specific label by index
+            var label = pieChart.data.labels[clickedElementindex];
+
+            ContactStatusService.setContactStatus(label);
+
+            $state.go('tab.visitors');
+          }
+        }
+
       }
     };
   })
@@ -231,6 +262,9 @@ angular.module('SMARTLobby.directives', [])
             hoverAnimationDuration: 400,
             legend: {
               position: 'top',
+              labels: {
+                fontSize: 9
+              }
             },
             tooltips: {
               mode: 'label'

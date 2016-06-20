@@ -13,6 +13,12 @@ var APP_CONFIG =
     DEFAULT: 'Normal',
     EMERGENCY: 'Emergency'
   },
+  THEME: {
+    BAR_DEFAULT: 'bar-dark',
+    TABS_DEFAULT: 'tabs-dark',
+    BAR_EMERGENCY: 'bar-assertive',
+    TABS_EMERGENCY: 'tabs-assertive'
+  },
   VOIP_SERVICE: {
     SKYPE: 'Skype',
     JABBER: 'Cisco Jabber',

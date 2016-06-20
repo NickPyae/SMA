@@ -19,20 +19,7 @@
         <div class="item divider-height"
              ng-class="{active: group.isShown}">
 
-          <div ng-click="toggleGroup(group)" >
-            <button class="divider-left-icon button button-icon icon" ng-class="group.isShown ? 'ion-ios-plus' : 'ion-ios-minus'">
-            </button>
-            <span class="divider-title">{{group.name}}</span>
-          </div>
-
-          <button class="button button-icon icon ion-iphone" style="position: absolute; right: 90px; bottom: -2px;" ng-click="callHost()">
-          </button>
-
-          <button class="button button-icon icon ion-chatboxes" style="position: absolute; right: 50px; bottom: -2px;" ng-click="bulkMessage()">
-          </button>
-
-          <button class="button button-icon icon ion-compose" style="position: absolute; right: 10px; bottom: -2px;" ng-click="updateAllVisitorsStatuses()">
-          </button>
+          <div visitor-divider-component></div>
         </div>
 
         <ion-item class="item-icon-right visitor-info"
@@ -40,23 +27,12 @@
                   ng-repeat="visitor in group.visitors"
                   ng-click="goToItem(visitor.meetingID)"
                   ng-show="group.isShown">
-          <div click-to-reveal-option-component class="div-click-content">
+          <div click-to-reveal-option-component class="div-click-content"></div>
 
-          </div>
-          <h2>{{visitor.name}}</h2>
-
-          <p>{{visitor.companyName}}</p>
-
-          <p>Checked in at {{visitor.checkInDateTime}}</p>
-
-          <p>Contact Status &#8680; {{visitor.contactStatus}}</p>
-        <span class="visitor-status"
-              ng-style="{'background-color': getVisitorStatus(visitor)}"/>
-          </span>
-          <i ng-hide="visitor.meetingID !== 1" class="icon ion-chevron-right icon-accessory"></i>
+          <div visitor-component></div>
 
           <ion-option-button class="button option-button ion-option-button-background-color" side="left">
-            <ion-checkbox class="ion-option-checkbox" ng-model="visitor.isChecked">
+            <ion-checkbox class="ion-option-checkbox checkbox-dark" ng-model="visitor.isChecked">
             </ion-checkbox>
           </ion-option-button>
 
@@ -75,9 +51,9 @@
             <i class="icon ion-log-out" style="right: 30px;"></i>
             <span>Checkout</span>
           </ion-option-button>
+
         </ion-item>
       </div>
-
     </ion-list>
 
 
@@ -91,7 +67,7 @@
   <ion-popover-view>
     <ion-content>
       <div class="list">
-        <ion-checkbox ng-repeat="filter in filters"
+        <ion-checkbox class="checkbox-dark" ng-repeat="filter in filters"
                       ng-model="filter.isChecked">
           {{ filter.status }}
       </div>

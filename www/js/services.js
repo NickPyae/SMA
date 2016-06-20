@@ -144,7 +144,7 @@ angular.module('SMARTLobby.services', [])
     };
   })
   .service('ContactStatusService', function() {
-      this.contactStatus = null;
+      this.contactStatus = null
 
       this.getContactStatus = function() {
           return this.contactStatus;
