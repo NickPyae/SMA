@@ -1,0 +1,35 @@
+{
+  "ReasonCodes": {
+    "-category": "NOT_READY",
+    "ReasonCode": [
+      {
+        "uri": "/finesse/api/ReasonCode/1",
+        "category": "NOT_READY",
+        "code": "1",
+        "label": "Lunch",
+        "forAll": "true"
+      },
+      {
+        "uri": "/finesse/api/ReasonCode/2",
+        "category": "NOT_READY",
+        "code": "2",
+        "label": "Break",
+        "forAll": "true"
+      },
+      {
+        "uri": "/finesse/api/ReasonCode/3",
+        "category": "NOT_READY",
+        "code": "3",
+        "label": "Paper Work",
+        "forAll": "true"
+      },
+      {
+        "uri": "/finesse/api/ReasonCode/4",
+        "category": "NOT_READY",
+        "code": "4",
+        "label": "Training",
+        "forAll": "true"
+      }
+    ]
+  }
+}

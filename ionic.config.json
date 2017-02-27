@@ -1,0 +1,8 @@
+{
+  "name": "SMARTLobby",
+  "app_id": "",
+  "proxies": {
+    "path": "/api",
+    "proxyUrl": "http://finesse1.dcloud.cisco.com/finesse/api/User/1072"
+  }
+}

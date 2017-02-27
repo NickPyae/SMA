@@ -1,0 +1,9 @@
+{
+  "User": {
+    "loginId": "1234",
+    "loginName": "csmith",
+    "state": "READY",
+    "stateChangeTime": "2012-03-01T17:58:21.234Z",
+    "reasonCodeId": "16"
+  }
+}

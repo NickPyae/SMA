@@ -1,9 +1,4 @@
 angular.module('SMARTLobby.directives', [])
-  .directive('visitorStatsComponent',function() {
-    return {
-      templateUrl: 'templates/visitor-stats-component.html'
-    };
-  })
   .directive('visitorComponent',function() {
     return {
       templateUrl: 'templates/visitor-component.html'

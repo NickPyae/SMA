@@ -1,31 +1,50 @@
 <ion-view hide-nav-bar="true">
-  <ion-content class="login-background" has-bouncing="false">
+  <ion-content class="my-background" has-bouncing="false">
     <div>
-      <form ng-submit="login(user,pw,ip, enableHTTPS)">
+      <form ng-submit="login(user, pw, ip, extension, selectedConnectionMode, phone)">
         <div class="list list-inset list-borderless" style="background:none;">
           <div class="item item-avatar" style="background:none;">
             <img src="./img/logo.png" style="top:38px;">
-            <h1 style="color:white;">SMARTLobby</h1>
+            <h1 style="color:white;">SMA</h1>
           </div>
           <label class="item item-input item-stacked-label">
-            <span class="input-label">User Name</span>
-            <input type="text" placeholder="user name" ng-model="user">
+            <input type="text" placeholder="Agent ID" ng-model="user">
           </label>
           <label class="item item-input item-stacked-label">
-            <span class="input-label">Password</span>
-            <input type="password" placeholder="password" ng-model="pw">
+            <input type="password" placeholder="Password" ng-model="pw">
           </label>
           <label class="item item-input item-stacked-label">
-            <span class="input-label">URL</span>
             <input type="text" placeholder="IP address or url" ng-model="ip">
           </label>
-          <ion-toggle class="item-stacked-label" ng-model="enableHTTPS.checked">
-            <span>Enable HTTPS</span>
-          </ion-toggle>
-          <div class="padding">
+          <label class="item item-input item-stacked-label">
+            <input type="text" placeholder="Extension Number" ng-model="extension">
+          </label>
+          <ion-toggle class="item-stacked-label" ng-model="signInAsAgent.isTurnedOn">Sign in as a Mobile Agent</ion-toggle>
+          <div ng-show="signInAsAgent.isTurnedOn">
+
+            <div class="item item-input item-stacked-label" >
+              <li class="item item-input-inset item-select">
+                <div class="input-label">
+                  Mode
+                </div>
+                <select
+                  ng-init="selectedConnectionMode"
+                  ng-options="connectionMode.label for connectionMode in connectionModes"
+                  ng-model="selectedConnectionMode"
+                  ng-change="onSelectConnectionModeChange(selectedConnectionMode)">
+                </select>
+              </li>
+            </div>
+
+            <label class="item item-input item-stacked-label">
+              <input type="text" placeholder="Phone Number" ng-model="phone">
+            </label>
+          </div>
+
+          <div class="item item-input item-stacked-label">
             <button type="submit"
                     class="button button-block icon-left ion-log-in">
-              Login
+              Sign in
             </button>
           </div>
         </div>

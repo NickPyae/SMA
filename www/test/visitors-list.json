@@ -11,7 +11,7 @@
                 "o": "The Walt Disney Company",
                 "c2": "+6532423423",
                 "img": "img/adam.jpg",
-                "n": "Nick",
+                "n": "Campaign 1",
                 "c1": "99585012",
                 "ci": "18/4/2016 (2:17PM)"
         },
@@ -33,7 +33,7 @@
                 "o": "Warner Bros Inc",
                 "c2": "+6532423423",
                 "img": "img/ben.png",
-                "n": "Nick",
+                "n": "Campaign 1",
                 "c1": "99585012",
                 "ci": "18/4/2016 (10:00AM)"
         },
@@ -55,7 +55,7 @@
                 "o": "Nex",
                 "c2": "+6532423423",
                 "img": "img/visitor.png",
-                "n": "Nick",
+                "n": "Campaign 1",
                 "c1": "99585012",
                 "ci": "18/4/2016 (3:15PM)"
         },
@@ -77,7 +77,7 @@
                 "o": "ABC Limited",
                 "c2": "+6532423423",
                 "img": "img/mike.png",
-                "n": "Kelvin",
+                "n": "Campaign 2",
                 "c1": "99585012",
                 "ci": "18/4/2016 (4:00PM)"
         },
@@ -99,7 +99,7 @@
                 "o": "HBO Inc",
                 "c2": "+6532423423",
                 "img": "img/perry.png",
-                "n": "Kelvin",
+                "n": "Campaign 2",
                 "c1": "99585012",
                 "ci": "18/4/2016 (5:00PM)"
         },
@@ -121,7 +121,7 @@
                 "o": "Lucas Inc",
                 "c2": "+6532423423",
                 "img": "img/adam.jpg",
-                "n": "Kelvin",
+                "n": "Campaign 2",
                 "c1": "99585012",
                 "ci": "18/4/2016 (10:17AM)"
         },
@@ -144,7 +144,7 @@
       "o": "Lucas Inc",
       "c2": "+6532423423",
       "img": "img/adam.jpg",
-      "n": "Steven",
+      "n": "Campaign 3",
       "c1": "99585012",
       "ci": "18/4/2016 (10:17AM)"
     },
@@ -167,7 +167,7 @@
       "o": "Lucas Inc",
       "c2": "+6532423423",
       "img": "img/adam.jpg",
-      "n": "Steven",
+      "n": "Campaign 3",
       "c1": "99585012",
       "ci": "18/4/2016 (10:17AM)"
     },
@@ -190,7 +190,7 @@
       "o": "Lucas Inc",
       "c2": "+6532423423",
       "img": "img/adam.jpg",
-      "n": "Steven",
+      "n": "Campaign 3",
       "c1": "99585012",
       "ci": "18/4/2016 (10:17AM)"
     },

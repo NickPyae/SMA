@@ -1,56 +1,41 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="Agent">
   <ion-nav-buttons side="right">
-    <button class="button button-outline button-light"
-            ng-click="toggleMode()">
-      {{mode}}
-    </button>
+    <!--<button class="button button-outline button-light"-->
+            <!--ng-click="toggleMode()" style="background-color: #FF4500;">-->
+      <!--{{mode}}-->
+    <!--</button>-->
   </ion-nav-buttons>
   <ion-content has-bouncing="false">
     <div class="list">
-      <div class="card" ng-show="mode === 'Emergency'">
-        <div class="item item-divider">
-          <i class="icon ion-ios-timer divider-icon-left">
-            <span class="divider-title">Timer</span>
-          </i>
-          <button class="button button-small button-dark" style="float: right;" ng-click="stopTimer()">
-            Stop
-          </button>
-        </div>
-        <div class="item item-text-wrap">
-          <!-- Timer -->
-          <div class="avgWaitTimeClock"></div>
-        </div>
-      </div>
-
       <div class="card">
-        <div visitor-stats-component></div>
-      </div>
-
-      <div class="card" ng-show="mode === 'Emergency'">
         <div class="item item-divider">
-          <i class="icon ion-pie-graph divider-icon-left">
-            <span class="divider-title">Contact Statuses</span>
-          </i>
+          {{surveyStatus}}
         </div>
-
-        <div class="item item-text-wrap">
-          <canvas id="pieChart" height="350" pie-chart-component></canvas>
-        </div>
-      </div>
-      <div class="card" ng-show="mode === 'Normal'">
-        <div class="item item-divider">
-          <i class="icon ion-stats-bars divider-icon-left">
-            <span class="divider-title">NexLabs Singapore</span>
-          </i>
-        </div>
-
-        <div class="item item-text-wrap">
-          <canvas id="comboChart" height="350" combo-chart-component></canvas>
+        <div class="list card" style="margin-left: 20px;">
+          <li class="item item-input-inset item-select">
+            <div class="input-label">
+              User State
+            </div>
+            <select
+              ng-style="{'background-color': statusColor}"
+              ng-init="selectedUserState"
+              ng-options="userState.label for userState in userStates"
+              ng-model="selectedUserState"
+              ng-change="onSelectUserStateChange(selectedUserState)">
+            </select>
+          </li>
         </div>
       </div>
-        </div>
+      <div class="card padding">
+        <button ng-click="answerCall()"
+                class="button button-block icon-left ion-android-call button-dark">
+          Answer Call
+        </button>
+        <button ng-click="endCall()"
+                class="button button-block icon-left ion-android-call button-dark">
+          End Call
+        </button>
       </div>
-    </div>
     </div>
   </ion-content>
 </ion-view>

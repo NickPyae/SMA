@@ -2,15 +2,15 @@
 var APP_CONFIG =
 {
   CONTACT_STATUS: {
-    UNCONTACTED: 'Uncontacted',
-    NO_REPLY: 'No Reply',
+    UNCONTACTED: 'Completed',
+    NO_REPLY: 'Request Call Back',
     VACATING: 'Vacating',
     EVACUATED: ' Evacuated',
-    IN_BUILDING: 'In Building',
-    LEFT_BUILDING: 'Left Building'
+    IN_BUILDING: 'Declined',
+    LEFT_BUILDING: 'No Answer'
   },
   MODE: {
-    DEFAULT: 'Normal',
+    DEFAULT: 'Survey',
     EMERGENCY: 'Emergency'
   },
   THEME: {

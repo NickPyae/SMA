@@ -1,65 +1,80 @@
-<ion-view view-title="Visitors">
-  <ion-nav-buttons side="left">
-    <button class="button button-icon icon ion-android-more-vertical" ng-click="popover.show($event)">
-    </button>
-    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
-    </button>
-  </ion-nav-buttons>
-  <ion-nav-buttons side="right">
-    <button class="button button-outline button-light"
-            ng-click="toggleMode()">
-      {{mode}}
-    </button>
-  </ion-nav-buttons>
+<ion-view view-title="Calling List">
+  <!--<ion-nav-buttons side="left">-->
+    <!--<button class="button button-icon icon ion-android-more-vertical" ng-click="popover.show($event)">-->
+    <!--</button>-->
+    <!--<button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">-->
+    <!--</button>-->
+  <!--</ion-nav-buttons>-->
+  <ion-content has-bouncing="false" class="iframe-wrapper">
 
-  <ion-content has-bouncing="false">
-    <ion-list can-swipe="true" swipe-direction="both">
-
-      <div ng-repeat="group in groups">
-        <div class="item divider-height"
-             ng-class="{active: group.isShown}">
-
-          <div visitor-divider-component></div>
-        </div>
-
-        <ion-item class="item-icon-right visitor-info"
-                  type="item-text-wrap"
-                  ng-repeat="visitor in group.visitors"
-                  ng-click="goToItem(visitor.meetingID)"
-                  ng-show="group.isShown">
-          <div click-to-reveal-option-component class="div-click-content"></div>
-
-          <div visitor-component></div>
-
-          <ion-option-button class="button option-button ion-option-button-background-color" side="left">
-            <ion-checkbox class="ion-option-checkbox checkbox-dark" ng-model="visitor.isChecked">
-            </ion-checkbox>
-          </ion-option-button>
-
-          <ion-option-button class="button-dark option-button" side="right"
-                             ng-click="call(visitor)">
-            <i class="icon ion-ios-telephone-outline"></i>
-            <span>Call</span>
-          </ion-option-button>
-          <ion-option-button class="button-positive option-button" side="right"
-                             ng-click="voip(visitor)">
-            <i class="icon ion-social-whatsapp-outline"></i>
-            <span>VoIP</span>
-          </ion-option-button>
-          <ion-option-button class="button-royal option-button" side="right"
-                             ng-click="checkout(visitor)">
-            <i class="icon ion-log-out" style="right: 30px;"></i>
-            <span>Checkout</span>
-          </ion-option-button>
-
-        </ion-item>
-      </div>
-    </ion-list>
-
-
-    <div ng-if="!groups[0].visitors.length" class="no-results">
-      <p>{{searchResult}}</p>
+    <div class="card padding">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label" style="color: black">Phone Number</span>
+        <input type="text" placeholder="" ng-model="phone">
+      </label>
+      <button ng-click="makeACall(phone)"
+              class="button button-block icon-left ion-android-call button-dark">
+        Call
+      </button>
+      <button ng-click="endCall()"
+              class="button button-block icon-left ion-android-call button-dark">
+        End Call
+      </button>
     </div>
+
+    <!--<ion-list can-swipe="true" swipe-direction="both">-->
+
+      <!--<div ng-repeat="group in groups">-->
+        <!--<div class="item divider-height"-->
+             <!--ng-class="{active: group.isShown}">-->
+
+          <!--<div visitor-divider-component></div>-->
+        <!--</div>-->
+
+        <!--<ion-item class="item-icon-right visitor-info"-->
+                  <!--type="item-text-wrap"-->
+                  <!--ng-repeat="visitor in group.visitors"-->
+                  <!--ng-click="goToItem(visitor.meetingID)"-->
+                  <!--ng-show="group.isShown">-->
+          <!--<div click-to-reveal-option-component class="div-click-content"></div>-->
+
+          <!--<div visitor-component></div>-->
+
+          <!--<ion-option-button class="button option-button ion-option-button-background-color" side="left">-->
+            <!--<ion-checkbox class="ion-option-checkbox checkbox-dark" ng-model="visitor.isChecked">-->
+            <!--</ion-checkbox>-->
+          <!--</ion-option-button>-->
+
+          <!--<ion-option-button class="button-dark option-button" side="right"-->
+                             <!--ng-click="call(visitor)">-->
+            <!--<i class="icon ion-ios-telephone-outline"></i>-->
+            <!--<span>Call</span>-->
+          <!--</ion-option-button>-->
+          <!---->
+          <!---->
+          <!--&lt;!&ndash;<ion-option-button class="button-positive option-button" side="right"&ndash;&gt;-->
+                             <!--&lt;!&ndash;ng-click="voip(visitor)">&ndash;&gt;-->
+            <!--&lt;!&ndash;<i class="icon ion-social-whatsapp-outline"></i>&ndash;&gt;-->
+            <!--&lt;!&ndash;<span>VoIP</span>&ndash;&gt;-->
+          <!--&lt;!&ndash;</ion-option-button>&ndash;&gt;-->
+          <!--&lt;!&ndash;<ion-option-button class="button-royal option-button" side="right"&ndash;&gt;-->
+                             <!--&lt;!&ndash;ng-click="checkout(visitor)">&ndash;&gt;-->
+            <!--&lt;!&ndash;<i class="icon ion-log-out" style="right: 30px;"></i>&ndash;&gt;-->
+            <!--&lt;!&ndash;<span>Checkout</span>&ndash;&gt;-->
+          <!--&lt;!&ndash;</ion-option-button>&ndash;&gt;-->
+
+        <!--</ion-item>-->
+      <!--</div>-->
+    <!--</ion-list>-->
+
+
+    <!--<div ng-if="!groups[0].visitors.length" class="no-results">-->
+      <!--<p>{{searchResult}}</p>-->
+    <!--</div>-->
+
+    <iframe ng-if="iFrameURL" data-tap-disabled="true" ng-src="{{iFrameURL}}">
+    </iframe>
+
   </ion-content>
 </ion-view>
 

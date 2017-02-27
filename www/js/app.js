@@ -72,7 +72,7 @@ angular.module('SMARTLobby', ['ionic', 'ionic-toast', 'jett.ionic.filter.bar', '
   // Each tab has its own nav history stack:
   .state('tab.dash', {
     url: '/dash',
-    cache: true,
+    cache: false,
     views: {
       'tab-dash': {
         templateUrl: 'templates/tab-dash.html',
@@ -83,7 +83,7 @@ angular.module('SMARTLobby', ['ionic', 'ionic-toast', 'jett.ionic.filter.bar', '
 
   .state('tab.visitors', {
       url: '/visitors',
-      cache: true, // do not refresh UI state
+      cache: false, // do not refresh UI state
       views: {
         'tab-visitors': {
           templateUrl: 'templates/tab-visitors.html',

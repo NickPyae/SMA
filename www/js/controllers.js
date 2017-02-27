@@ -1,15 +1,176 @@
 angular.module('SMARTLobby.controllers', [])
 
-  .controller('LoginCtrl', function ($scope, $state) {
+  .controller('LoginCtrl', function ($scope, $state, FinesseFactory, MaskFactory) {
 
-    $scope.login = function () {
-      $state.go('tab.visitors');
+    $scope.user = '1072';
+    $scope.pw = '1072';
+    $scope.ip = 'finesse1.dcloud.cisco.com';
+    $scope.extension = '';
+    $scope.phone = '';
+
+    $scope.signInAsAgent = {
+        isTurnedOn: false
     };
+
+    $scope.connectionModes = [
+      {
+        type: 'NAILED_CONNECTION',
+        label: 'Always Connected'
+      },
+      {
+        type: 'CALL_BY_CALL',
+        label: 'Call by Call'
+      }
+    ];
+
+    $scope.selectedConnectionMode = $scope.connectionModes[0];
+
+    $scope.onSelectConnectionModeChange = function(selectedConnectionMode) {
+      $scope.selectedConnectionMode = selectedConnectionMode;
+    };
+
+    $scope.login = function (userID, pw,ip, extension, connectionMode, phone) {
+
+      MaskFactory.loadingMask(true, 'Loading');
+
+      FinesseFactory.login(ip, userID, pw, extension, connectionMode.type, phone).then(function(data) {
+        if(data.status === 202) {
+          MaskFactory.loadingMask(false);
+          $state.go('tab.dash');
+        }
+
+      }, function(error) {
+        MaskFactory.loadingMask(false);
+        MaskFactory.showMask(MaskFactory.error, 'Error logging in.');
+      });
+    };
+
   })
 
   .controller('DashCtrl', function ($rootScope, $scope, $state, APP_CONFIG,
                                     $timeout, TimerService, AppModeService,
-                                    $ionicPopup, ionicToast, AppColorThemeService) {
+                                    $ionicPopup, ionicToast, AppColorThemeService,
+                                    FinesseFactory, MaskFactory, localStorageService, $ionicHistory) {
+    $scope.userStates = [];
+
+    FinesseFactory.getReasonCodes().then(function(data) {
+        angular.forEach(data.ReasonCode, function(item) {
+            $scope.userStates.push({
+              category: item.category,
+              reasonCodeId: item.code,
+              label: item.category + ': ' + item.label,
+              statusColor: '#FF4500'
+            });
+        });
+
+      $scope.userStates.push({
+        category: 'READY',
+        reasonCodeId: null,
+        label: 'READY',
+        statusColor: '#33cd5f'
+      });
+
+      $scope.userStates.push({
+        category: 'LOGOUT',
+        reasonCodeId: null,
+        label: 'LOGOUT',
+        statusColor: '#444444'
+      });
+
+      if(localStorageService.get('REASON_CODE')) {
+        angular.forEach($scope.userStates, function(item) {
+            if(item.label === localStorageService.get('REASON_CODE')) {
+              $scope.selectedUserState = item;
+              $scope.surveyStatus = item.category  + ' SURVEY';
+              $scope.statusColor = item.statusColor;
+            }
+        });
+      } else {
+        $scope.selectedUserState = $scope.userStates[0];
+        $scope.surveyStatus = $scope.selectedUserState.category  + ' SURVEY';
+        $scope.statusColor = $scope.selectedUserState.statusColor;
+      }
+    });
+
+    $scope.onSelectUserStateChange = function(userState) {
+      MaskFactory.loadingMask(true, 'Loading');
+
+        FinesseFactory.changeAgentState(userState.category, userState.reasonCodeId).then(function(data) {
+
+          $scope.selectedUserState = userState;
+          $scope.surveyStatus = userState.category  + ' SURVEY';
+          $scope.statusColor = userState.statusColor;
+          localStorageService.set('REASON_CODE', userState.label);
+
+          if(userState.category === 'LOGOUT') {
+            MaskFactory.loadingMask(false);
+
+            // Clear all navigation stack history
+            $ionicHistory.clearHistory();
+
+            // Clear all the cache views
+            $ionicHistory.clearCache();
+
+            FinesseFactory.logout();
+
+            // Clear all local storage
+            localStorageService.clearAll();
+
+            // Go back to login view
+            $state.go('login');
+          }
+
+          MaskFactory.loadingMask(false);
+        }, function(error) {
+          MaskFactory.loadingMask(false);
+          MaskFactory.showMask(MaskFactory.error, 'Error updating agent state.');
+        });
+    };
+
+    $scope.answerCall = function() {
+      MaskFactory.loadingMask(true, 'Answering Call');
+
+      FinesseFactory.getDialogID().then(function(dialogID) {
+        if(dialogID) {
+          FinesseFactory.answerCall(dialogID).then(function(data) {
+            if(data.status === 202) {
+              MaskFactory.loadingMask(false);
+            }
+          }, function(error) {
+            MaskFactory.loadingMask(false);
+            MaskFactory.showMask(MaskFactory.error, 'Error answering call.');
+          });
+        }
+
+        MaskFactory.loadingMask(false);
+      }, function(error) {
+        MaskFactory.loadingMask(false);
+        MaskFactory.showMask(MaskFactory.error, 'Error answering call.');
+      });
+    };
+
+    $scope.endCall = function() {
+      MaskFactory.loadingMask(true, 'Ending Call');
+
+      FinesseFactory.getDialogID().then(function(dialogID) {
+
+        if(dialogID) {
+          FinesseFactory.endCall(dialogID).then(function(data) {
+            if(data.status === 202) {
+              MaskFactory.loadingMask(false);
+            }
+          }, function(error) {
+            MaskFactory.loadingMask(false);
+            MaskFactory.showMask(MaskFactory.error, 'Error ending call.');
+          });
+        }
+
+        MaskFactory.loadingMask(false);
+      }, function(error) {
+        MaskFactory.loadingMask(false);
+        MaskFactory.showMask(MaskFactory.error, 'Error ending call.');
+      });
+    };
 
     var flipTimer = null;
 
@@ -146,7 +307,57 @@ angular.module('SMARTLobby.controllers', [])
                                         localStorageService, ionicToast,
                                         CallService, SMSService, APP_CONFIG,
                                         ContactStatusService, $timeout, TimerService,
-                                        AppModeService, AppColorThemeService) {
+                                        AppModeService, AppColorThemeService, FinesseFactory,
+  MaskFactory, $sce) {
+
+
+    $scope.phone = '';
+
+    $scope.makeACall = function(phone) {
+        MaskFactory.loadingMask(true, 'Making Call');
+
+        FinesseFactory.changeAgentState('NOT_READY', 4).then(function() {
+          FinesseFactory.makeACall(phone).then(function(data) {
+            if(data.status === 202) {
+              MaskFactory.loadingMask(false);
+            }
+          }, function(error) {
+            MaskFactory.loadingMask(false);
+            MaskFactory.showMask(MaskFactory.error, 'Error making call.');
+          });
+        });
+    };
+
+    $scope.endCall = function() {
+      MaskFactory.loadingMask(true, 'Ending Call');
+
+      FinesseFactory.getDialogID().then(function(dialogID) {
+
+          if(dialogID) {
+            FinesseFactory.endCall(dialogID).then(function(data) {
+              if(data.status === 202) {
+                MaskFactory.loadingMask(false);
+              }
+            }, function(error) {
+              MaskFactory.loadingMask(false);
+              MaskFactory.showMask(MaskFactory.error, 'Error ending call.');
+            });
+          }
+
+        MaskFactory.loadingMask(false);
+      }, function(error) {
+        MaskFactory.loadingMask(false);
+        MaskFactory.showMask(MaskFactory.error, 'Error ending call.');
+      });
+    };
+
+
+    // Load surveymonkey content into iFrame
+    if(localStorageService.get('SURVEY_URL')) {
+      $scope.iFrameURL =  $sce.trustAsResourceUrl(localStorageService.get('SURVEY_URL'));
+    } else {
+      $scope.iFrameURL = $sce.trustAsResourceUrl('');
+    }
 
     $scope.$on('$ionicView.beforeEnter', function (event, data) {
       console.log(APP_CONFIG);
@@ -175,24 +386,23 @@ angular.module('SMARTLobby.controllers', [])
       }
     });
 
-
     $scope.groups = [];
 
     function prepareVisitorsGroups() {
       $scope.groups[0] = {
-        name: 'Nick',
+        name: 'Campaign 1',
         visitors: [],
         isShown: true
       };
 
       $scope.groups[1] = {
-        name: 'Kelvin',
+        name: 'Campaign 2',
         visitors: [],
         isShown: true
       };
 
       $scope.groups[2] = {
-        name: 'Steven',
+        name: 'Campaign 3',
         visitors: [],
         isShown: true
       };
@@ -213,7 +423,6 @@ angular.module('SMARTLobby.controllers', [])
         $scope.groups[2].isShown = !$scope.groups[2].isShown;
       }
     };
-
 
     $scope.bulkMessage = function () {
       SMSService.sendSMS('+65234343434');
@@ -236,8 +445,6 @@ angular.module('SMARTLobby.controllers', [])
     $scope.toggleMode = function () {
 
       if ($scope.mode === APP_CONFIG.MODE.DEFAULT) {
-
-
         var confirmPopup = $ionicPopup.show({
           title: 'Activating ' + APP_CONFIG.MODE.EMERGENCY + ' mode',
           buttons: [
@@ -377,9 +584,9 @@ angular.module('SMARTLobby.controllers', [])
       prepareVisitorsGroups();
 
       angular.forEach(visitors, function (visitor) {
-        if (visitor.hostName === 'Nick') {
+        if (visitor.hostName === 'Campaign 1') {
           $scope.groups[0].visitors.push(visitor);
-        } else if (visitor.hostName === 'Kelvin') {
+        } else if (visitor.hostName === 'Campaign 2') {
           $scope.groups[1].visitors.push(visitor);
         } else {
           $scope.groups[2].visitors.push(visitor);
@@ -422,10 +629,6 @@ angular.module('SMARTLobby.controllers', [])
 
       return sortedVisitors;
     }
-
-    $scope.refreshVisitors = function () {
-      watchFilterChanges();
-    };
 
     $scope.goToItem = function (meetingID) {
       if (meetingID === 1) {
@@ -588,9 +791,9 @@ angular.module('SMARTLobby.controllers', [])
         prepareVisitorsGroups();
 
         angular.forEach(filteredItems, function (visitor) {
-          if (visitor.hostName === 'Nick') {
+          if (visitor.hostName === 'Campaign 1') {
             $scope.groups[0].visitors.push(visitor);
-          } else if (visitor.hostName === 'Kelvin') {
+          } else if (visitor.hostName === 'Campaign 2') {
             $scope.groups[1].visitors.push(visitor);
           } else {
             $scope.groups[2].visitors.push(visitor);
@@ -824,7 +1027,7 @@ angular.module('SMARTLobby.controllers', [])
   .controller('SettingsCtrl', function ($scope, $state, $ionicHistory, localStorageService,
                                         $timeout, TimerService, AppModeService,
                                         ionicToast, $ionicPopup, APP_CONFIG,
-                                        AppColorThemeService) {
+                                        AppColorThemeService, FinesseFactory) {
 
     $scope.$on('$ionicView.beforeEnter', function (event, data) {
 
@@ -924,9 +1127,6 @@ angular.module('SMARTLobby.controllers', [])
       // Clear all the cache views
       $ionicHistory.clearCache();
 
-      // Clear all local storage
-      localStorageService.clearAll();
-
       // Stop global timer
       clearTimer(true);
 
@@ -935,6 +1135,11 @@ angular.module('SMARTLobby.controllers', [])
 
       // Reset mode to default
       AppModeService.setMode(APP_CONFIG.MODE.DEFAULT);
+
+      FinesseFactory.logout();
+
+      // Clear all local storage
+      localStorageService.clearAll();
 
       // Go back to login view
       $state.go('login');
@@ -953,10 +1158,17 @@ angular.module('SMARTLobby.controllers', [])
 
   })
 
-  .controller('AppSettingsCtrl', function ($scope, $state, APP_CONFIG) {
+  .controller('AppSettingsCtrl', function ($scope, $state, APP_CONFIG, MaskFactory, localStorageService) {
+
+    $scope.survey = {
+        URL: 'https://www.surveymonkey.com/r/K8NBWGK'
+    };
 
     $scope.saveSettings = function () {
 
+      localStorageService.set('SURVEY_URL', $scope.survey.URL);
+
+      MaskFactory.showMask(MaskFactory.success, 'Settings saved.');
     };
 
     $scope.items = [{

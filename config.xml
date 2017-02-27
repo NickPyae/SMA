@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.nexlabs.smartlobby" version="1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>SMARTLobby</name>
+<widget id="com.nexlabs.sma" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>SMA</name>
   <description>
-        SMARTLobby
+        SMA
     </description>
   <author email="pyaephyo@nexlabs.com" href="http://nexlabs.com/">
       Pyae Phyo
@@ -13,6 +13,7 @@
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="BackupWebStorage" value="none"/>
+  <preference name="SplashScreen" value="none"/>
   <preference name="FadeSplashScreen" value="false"/>
   <preference name="ShowSplashScreenSpinner" value="false"/>
   <preference name="deployment-target" value="8.3"/>
@@ -25,6 +26,13 @@
   <platform name="ios">
     <preference name="SplashScreenDelay" value="1000"/>
     <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
+    <splash src="resources/ios/splash/Default-568h@2x~iphone.png" width="640" height="1136"/>
+    <splash src="resources/ios/splash/Default-667h.png" width="750" height="1334"/>
+    <splash src="resources/ios/splash/Default-736h.png" width="1242" height="2208"/>
+    <splash src="resources/ios/splash/Default-Portrait@2x~ipad.png" width="1536" height="2048"/>
+    <splash src="resources/ios/splash/Default-Portrait~ipad.png" width="768" height="1024"/>
+    <splash src="resources/ios/splash/Default@2x~iphone.png" width="640" height="960"/>
+    <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
     <icon src="resources/ios/icon/icon.png" width="57" height="57"/>
     <icon src="resources/ios/icon/icon@2x.png" width="114" height="114"/>
     <icon src="resources/ios/icon/icon-40.png" width="40" height="40"/>
@@ -43,27 +51,20 @@
     <icon src="resources/ios/icon/icon-small.png" width="29" height="29"/>
     <icon src="resources/ios/icon/icon-small@2x.png" width="58" height="58"/>
     <icon src="resources/ios/icon/icon-small@3x.png" width="87" height="87"/>
-    <splash src="resources/ios/splash/Default-568h@2x~iphone.png" width="640" height="1136"/>
-    <splash src="resources/ios/splash/Default-667h.png" width="750" height="1334"/>
-    <splash src="resources/ios/splash/Default-736h.png" width="1242" height="2208"/>
-    <splash src="resources/ios/splash/Default-Portrait@2x~ipad.png" width="1536" height="2048"/>
-    <splash src="resources/ios/splash/Default-Portrait~ipad.png" width="768" height="1024"/>
-    <splash src="resources/ios/splash/Default@2x~iphone.png" width="640" height="960"/>
-    <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
   </platform>
   <platform name="android">
-    <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
-    <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi"/>
-    <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi"/>
-    <icon src="resources/android/icon/drawable-xhdpi-icon.png" density="xhdpi"/>
-    <icon src="resources/android/icon/drawable-xxhdpi-icon.png" density="xxhdpi"/>
-    <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" density="xxxhdpi"/>
     <splash src="resources/android/splash/drawable-port-ldpi-screen.png" density="port-ldpi"/>
     <splash src="resources/android/splash/drawable-port-mdpi-screen.png" density="port-mdpi"/>
     <splash src="resources/android/splash/drawable-port-hdpi-screen.png" density="port-hdpi"/>
     <splash src="resources/android/splash/drawable-port-xhdpi-screen.png" density="port-xhdpi"/>
     <splash src="resources/android/splash/drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
     <splash src="resources/android/splash/drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
+    <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
+    <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi"/>
+    <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi"/>
+    <icon src="resources/android/icon/drawable-xhdpi-icon.png" density="xhdpi"/>
+    <icon src="resources/android/icon/drawable-xxhdpi-icon.png" density="xxhdpi"/>
+    <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" density="xxxhdpi"/>
   </platform>
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
 </widget>
