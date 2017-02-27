@@ -1,0 +1,54 @@
+<ion-view view-title="Calling List">
+  <ion-content has-bouncing="false" class="iframe-wrapper">
+    <div class="padding">
+      <label class="item item-input">
+        <span class="input-label"><b>Phone Number</b></span>
+        <input type="text" placeholder="+65" ng-model="phone">
+      </label>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button ng-click="makeACall(phone)"
+                class="button button-block icon-left ion-android-call button-dark">
+          Call
+        </button>
+      </div>
+      <div class="col">
+        <button ng-click="endCall()"
+                class="button button-block icon-left ion-android-call button-dark">
+          End Call
+        </button>
+      </div>
+    </div>
+    <iframe ng-if="iFrameURL" data-tap-disabled="true" ng-src="{{iFrameURL}}">
+    </iframe>
+
+  </ion-content>
+</ion-view>
+
+<script id="templates/popover.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-content>
+      <div class="list">
+        <ion-checkbox class="checkbox-dark" ng-repeat="filter in filters"
+                      ng-model="filter.isChecked">
+          {{ filter.status }}
+      </div>
+    </ion-content>
+  </ion-popover-view>
+</script>
+
+<script id="templates/voip-popup.html" type="text/ng-template">
+  <div class="list-borderless">
+    <ion-list>
+      <ion-radio ng-repeat="voipService in voipServices"
+                 ng-value="voipService.type"
+                 ng-model="defaultVoIPService.type">
+        {{ voipService.type }}
+      </ion-radio>
+    </ion-list>
+  </div>
+</script>
+
+
+

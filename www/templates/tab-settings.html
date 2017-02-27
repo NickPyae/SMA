@@ -1,20 +1,14 @@
 <ion-view view-title="Settings">
-  <!--<ion-nav-buttons side="right">-->
-    <!--<button class="button button-outline button-light"-->
-            <!--ng-click="toggleMode()" style="background-color: #FF4500;">-->
-      <!--{{mode}}-->
-    <!--</button>-->
-  <!--</ion-nav-buttons>-->
   <ion-content has-bouncing="false">
     <div class="list card">
       <ion-item ui-sref="tab.app-settings">
-        <i class="icon ion-toggle-filled"></i> &nbsp; App Settings
+        <i class="icon ion-toggle-filled"></i> &nbsp; <b>App Settings</b>
       </ion-item>
       <ion-item ui-sref="tab.account-settings">
-        <i class="icon ion-locked"></i> &nbsp; Account Settings
+        <i class="icon ion-locked"></i> &nbsp; <b>Account Settings</b>
       </ion-item>
       <ion-item ng-click="logOut()">
-        <i class="icon ion-log-out"></i> &nbsp; Log Out
+        <i class="icon ion-log-out"></i> &nbsp; <b>Logout</b>
       </ion-item>
     </div>
   </ion-content>

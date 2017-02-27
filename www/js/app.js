@@ -5,9 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in factories.js
 // 'starter.controllers' is found in controllers.js
-angular.module('SMARTLobby', ['ionic', 'ionic-toast', 'jett.ionic.filter.bar', 'LocalStorageModule',
-  'SMARTLobby.controllers', 'SMARTLobby.factories', 'SMARTLobby.services',
-  'SMARTLobby.directives', 'SMARTLobby.constants'])
+angular.module('SMA', ['ionic', 'LocalStorageModule',
+  'SMA.controllers', 'SMA.factories'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -26,12 +25,12 @@ angular.module('SMARTLobby', ['ionic', 'ionic-toast', 'jett.ionic.filter.bar', '
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider,
-                 $ionicFilterBarConfigProvider, localStorageServiceProvider) {
+                 localStorageServiceProvider) {
 
 
   // Global local storage settings
   localStorageServiceProvider
-    .setPrefix('SMARTLobby')
+    .setPrefix('SMA')
     .setStorageType('localStorage')
     .setNotify(true, true);
 
@@ -43,12 +42,6 @@ angular.module('SMARTLobby', ['ionic', 'ionic-toast', 'jett.ionic.filter.bar', '
 
   // Enable native scrolling in android as well as removing scrollbar indicator
   $ionicConfigProvider.scrolling.jsScrolling(true);
-
-  // Overlay visitor list
-  $ionicFilterBarConfigProvider.backdrop(true);
-
-  // Search bar transition horizontally from right to left
-  $ionicFilterBarConfigProvider.transition('horizontal');
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -70,34 +63,24 @@ angular.module('SMARTLobby', ['ionic', 'ionic-toast', 'jett.ionic.filter.bar', '
   })
 
   // Each tab has its own nav history stack:
-  .state('tab.dash', {
-    url: '/dash',
-    cache: false,
+  .state('tab.agent', {
+    url: '/agent',
+    cache: false, // refresh ui state
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+      'tab-agent': {
+        templateUrl: 'templates/tab-agent.html',
+        controller: 'AgentCtrl'
       }
     }
   })
 
-  .state('tab.visitors', {
-      url: '/visitors',
-      cache: false, // do not refresh UI state
-      views: {
-        'tab-visitors': {
-          templateUrl: 'templates/tab-visitors.html',
-          controller: 'VisitorsCtrl'
-        }
-      }
-    })
-    .state('tab.meeting-detail', {
-      url: '/visitors/:meetingID',
+  .state('tab.survey', {
+      url: '/survey',
       cache: false,
       views: {
-        'tab-visitors': {
-          templateUrl: 'templates/meeting-detail.html',
-          controller: 'MeetingDetailCtrl'
+        'tab-survey': {
+          templateUrl: 'templates/tab-survey.html',
+          controller: 'SurveyCtrl'
         }
       }
     })

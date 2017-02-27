@@ -1,0 +1,132 @@
+{
+  "Queues": {
+    "Queue": [
+      {
+        "name": "RCM_Diamond",
+        "statistics": {
+          "agentsNotReady": "0",
+          "agentsReady": "0",
+          "agentsTalkingInbound": "0",
+          "agentsTalkingInternal": "0",
+          "agentsTalkingOutbound": "0",
+          "agentsWrapUpNotReady": "0",
+          "agentsWrapUpReady": "0",
+          "callsInQueue": "0"
+        },
+        "uri": "/finesse/api/Queue/4589316"
+      },
+      {
+        "name": "CIM_CALLBACK",
+        "statistics": {
+          "agentsNotReady": "0",
+          "agentsReady": "0",
+          "agentsTalkingInbound": "0",
+          "agentsTalkingInternal": "0",
+          "agentsTalkingOutbound": "0",
+          "agentsWrapUpNotReady": "0",
+          "agentsWrapUpReady": "0",
+          "callsInQueue": "0"
+        },
+        "uri": "/finesse/api/Queue/4"
+      },
+      {
+        "name": "EIM_OUTBOUND",
+        "statistics": {
+          "agentsNotReady": "0",
+          "agentsReady": "0",
+          "agentsTalkingInbound": "0",
+          "agentsTalkingInternal": "-1",
+          "agentsTalkingOutbound": "-1",
+          "agentsWrapUpNotReady": "0",
+          "agentsWrapUpReady": "0",
+          "callsInQueue": "0"
+        },
+        "uri": "/finesse/api/Queue/9323350"
+      },
+      {
+        "name": "CIM_EIM",
+        "statistics": {
+          "agentsNotReady": "0",
+          "agentsReady": "0",
+          "agentsTalkingInbound": "0",
+          "agentsTalkingInternal": "-1",
+          "agentsTalkingOutbound": "-1",
+          "agentsWrapUpNotReady": "0",
+          "agentsWrapUpReady": "0",
+          "callsInQueue": "0"
+        },
+        "uri": "/finesse/api/Queue/0"
+      },
+      {
+        "name": "RCM_Platinum",
+        "statistics": {
+          "agentsNotReady": "0",
+          "agentsReady": "0",
+          "agentsTalkingInbound": "0",
+          "agentsTalkingInternal": "0",
+          "agentsTalkingOutbound": "0",
+          "agentsWrapUpNotReady": "0",
+          "agentsWrapUpReady": "0",
+          "callsInQueue": "0"
+        },
+        "uri": "/finesse/api/Queue/10273946"
+      },
+      {
+        "name": "CIM_WIM",
+        "statistics": {
+          "agentsNotReady": "0",
+          "agentsReady": "0",
+          "agentsTalkingInbound": "0",
+          "agentsTalkingInternal": "-1",
+          "agentsTalkingOutbound": "-1",
+          "agentsWrapUpNotReady": "0",
+          "agentsWrapUpReady": "0",
+          "callsInQueue": "0"
+        },
+        "uri": "/finesse/api/Queue/2"
+      },
+      {
+        "name": "RCM_Gold",
+        "statistics": {
+          "agentsNotReady": "0",
+          "agentsReady": "0",
+          "agentsTalkingInbound": "0",
+          "agentsTalkingInternal": "0",
+          "agentsTalkingOutbound": "0",
+          "agentsWrapUpNotReady": "0",
+          "agentsWrapUpReady": "0",
+          "callsInQueue": "0"
+        },
+        "uri": "/finesse/api/Queue/9342036"
+      },
+      {
+        "name": "RCM_Silver",
+        "statistics": {
+          "agentsNotReady": "0",
+          "agentsReady": "0",
+          "agentsTalkingInbound": "0",
+          "agentsTalkingInternal": "0",
+          "agentsTalkingOutbound": "0",
+          "agentsWrapUpNotReady": "0",
+          "agentsWrapUpReady": "0",
+          "callsInQueue": "0"
+        },
+        "uri": "/finesse/api/Queue/5958695"
+      },
+      {
+        "name": "CIM_DELAYED",
+        "statistics": {
+          "agentsNotReady": "0",
+          "agentsReady": "0",
+          "agentsTalkingInbound": "0",
+          "agentsTalkingInternal": "0",
+          "agentsTalkingOutbound": "0",
+          "agentsWrapUpNotReady": "0",
+          "agentsWrapUpReady": "0",
+          "callsInQueue": "0"
+        },
+        "uri": "/finesse/api/Queue/5"
+      }
+    ]
+  }
+}

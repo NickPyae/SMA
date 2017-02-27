@@ -1,0 +1,51 @@
+<ion-view view-title="Agent">
+  <ion-content has-bouncing="false">
+    <div class="list">
+      <div class="card">
+        <div class="item item-divider survey-status">
+          {{surveyStatus}}
+        </div>
+        <li class="item item-input-inset item-select">
+          <div class="input-label">
+            <b>User State</b>
+          </div>
+          <select
+            style="font-size: 0.7em;"
+            ng-style="{'color': statusColor}"
+            ng-init="selectedUserState"
+            ng-options="userState.label for userState in userStates"
+            ng-model="selectedUserState"
+            ng-change="onSelectUserStateChange(selectedUserState)">
+          </select>
+        </li>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button ng-click="answerCall()"
+                  class="button button-block icon-left ion-android-call button-dark">
+            Answer Call
+          </button>
+        </div>
+        <div class="col">
+          <button ng-click="endCall()"
+                  class="button button-block icon-left ion-android-call button-dark">
+            End Call
+          </button>
+        </div>
+      </div>
+
+      <ion-scroll style="height: 370px; margin-top: -20px;">
+        <div class="card" ng-repeat="queue in queues">
+          <div class="item item-divider survey-status">
+            {{queue.name}}
+          </div>
+          <div class="item item-text-wrap">
+            <span style="font-size: 3.5em;">{{queue.statistics.callsInQueue}}</span> <span style="font-size: 2em;">callsInQueue</span>
+          </div>
+        </div>
+      </ion-scroll>
+    </div>
+    </div>
+  </ion-content>
+</ion-view>
+
