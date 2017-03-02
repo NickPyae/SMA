@@ -1,5 +1,5 @@
 angular.module('SMA.factories', [])
-  .factory('MaskFactory', function ($ionicLoading) {
+  .factory('MaskFactory', ['$ionicLoading', function ($ionicLoading) {
     var maskTypes = {
       success: {
         icon: '',
@@ -41,22 +41,24 @@ angular.module('SMA.factories', [])
       error: maskTypes.error,
       success: maskTypes.success
     };
-  })
-  .factory('FinesseFactory', ['$http', '$q', 'localStorageService',
-    function ($http, $q, localStorageService) {
+  }])
+  .factory('FinesseFactory', ['$http', '$q', 'localStorageService', 'CONFIG',
+    function ($http, $q, localStorageService, CONFIG) {
 
       return {
-        login: function (domain, userID, password, extension, connectionMode, phone) {
+        signIn: function (domain, userID, password, extension, connectionMode, phone) {
           var defer = $q.defer();
 
           var authorization = btoa(userID + ':' + password);
 
-          localStorageService.set('DOMAIN', domain);
-          localStorageService.set('USER_ID', userID);
-          localStorageService.set('AUTH_TOKEN', authorization);
-          localStorageService.set('EXTENSION', extension);
+          localStorageService.set(CONFIG.AUTH.DOMAIN, domain);
+          localStorageService.set(CONFIG.AUTH.USER_ID, userID);
+          localStorageService.set(CONFIG.AUTH.TOKEN, authorization);
+          localStorageService.set(CONFIG.AUTH.EXTENSION, extension);
 
-          var url = 'http://' + domain + '/finesse/api/User/' + userID;
+          var url = 'https://' + domain + '/finesse/api/User/' + userID;
+
+          // To test with fake json, comment headers and transformResponse properties
           //var url = './test/userStatus.json';
 
           var dataXML = null;
@@ -78,7 +80,6 @@ angular.module('SMA.factories', [])
           };
 
           $http(req).then(function (data) {
-            console.log(data);
 
             defer.resolve(data);
           }, function (error) {
@@ -89,94 +90,131 @@ angular.module('SMA.factories', [])
 
           return defer.promise;
         },
-        logout: function () {
+        getUserStatus: function() {
           var defer = $q.defer();
 
-          var domain = localStorageService.get('DOMAIN');
-          var userID = localStorageService.get('USER_ID');
-          var authorization = localStorageService.get('AUTH_TOKEN');
+          var domain = localStorageService.get(CONFIG.AUTH.DOMAIN);
+          var userID = localStorageService.get(CONFIG.AUTH.USER_ID);
+          var authorization = localStorageService.get(CONFIG.AUTH.TOKEN);
 
-          var url = 'http://' + domain + '/finesse/api/User/' + userID;
+          var url = 'https://' + domain + '/finesse/api/User/' + userID;
 
-          var req = {
-            method: 'PUT',
-            url: url,
-            headers: {
-              'Authorization': 'Basic ' + authorization,
-              'Content-Type': 'application/xml'
-            },
-            data: '<User><state>LOGOUT</state><logoutAllMedia>true</logoutAllMedia></User>'
-          };
-
-          $http(req).then(function (data) {
-            console.log(data);
-
-            defer.resolve(data);
-          }, function (error) {
-            console.log(error);
-
-            defer.reject(error);
-          });
-
-          return defer.promise;
-        },
-        getUser: function () {
-          var defer = $q.defer();
-
-          var domain = localStorageService.get('DOMAIN');
-          var userID = localStorageService.get('USER_ID');
-          var authorization = localStorageService.get('AUTH_TOKEN');
-
-          var url = 'http://' + domain + '/finesse/api/User/' + userID;
-
-          var req = {
-            method: 'PUT',
-            url: url,
-            headers: {
-              'Authorization': 'Basic ' + authorization
-            }
-          };
-
-          console.log(req);
-
-          $http(req).then(function (response) {
-
-            console.log(response);
-
-            defer.resolve(response.data);
-
-          }, function (error) {
-            console.log(error);
-
-            defer.reject(error);
-          });
-
-          return defer.promise;
-        },
-        getReasonCodes: function () {
-          var defer = $q.defer();
-
-          var domain = localStorageService.get('DOMAIN');
-          var userID = localStorageService.get('USER_ID');
-          var authorization = localStorageService.get('AUTH_TOKEN');
-
-          //var url = 'http://' + domain + '/finesse/api/User/' + userID + '/ReasonCodes?category=NOT_READY';
-
-          var url = './test/reasonCodes.json';
+          // To test with fake json, comment headers and transformResponse properties
+          //var url = './test/userStateTalking.json';
+          //var url = './test/userStateHangup.json';
 
           var req = {
             method: 'GET',
             url: url,
-            //headers: {
-            //  'Authorization': 'Basic ' + authorization,
-            //}
+            headers: {
+              'Authorization': 'Basic ' + authorization,
+            },
+            transformResponse: function (data, headersGetter, status) {
+
+              //Transform xml to json and return
+              var x2js = new X2JS();
+              var xmlText = data;
+              var jsonObj = x2js.xml_str2json(xmlText);
+
+              return jsonObj;
+            }
           };
 
           $http(req).then(function (response) {
 
-            console.log(response);
+            if(response.data && response.data.User) {
+              defer.resolve(response.data.User);
+            } else {
+              defer.resolve(null);
+            }
+          }, function (error) {
+            console.log(error);
 
-            defer.resolve(response.data.ReasonCodes);
+            defer.reject(error);
+          });
+
+          return defer.promise;
+        },
+        getNotReadyReasonCodes: function () {
+          var defer = $q.defer();
+
+          var domain = localStorageService.get(CONFIG.AUTH.DOMAIN);
+          var userID = localStorageService.get(CONFIG.AUTH.USER_ID);
+          var authorization = localStorageService.get(CONFIG.AUTH.TOKEN);
+
+          var url = 'https://' + domain + '/finesse/api/User/' + userID + '/ReasonCodes?category=NOT_READY';
+
+          // To test with fake json, comment headers and transformResponse properties
+          //var url = './test/notReadyReasonCodes.json';
+
+          var req = {
+            method: 'GET',
+            url: url,
+            headers: {
+              'Authorization': 'Basic ' + authorization,
+            },
+            transformResponse: function (data, headersGetter, status) {
+
+              //Transform xml to json and return
+              var x2js = new X2JS();
+              var xmlText = data;
+              var jsonObj = x2js.xml_str2json(xmlText);
+
+              return jsonObj;
+            }
+          };
+
+          $http(req).then(function (response) {
+
+            if(response.data && response.data.ReasonCodes && response.data.ReasonCodes.ReasonCode && response.data.ReasonCodes.ReasonCode.length !== 0) {
+              defer.resolve(response.data.ReasonCodes.ReasonCode);
+            } else {
+              defer.resolve(null);
+            }
+          }, function (error) {
+            console.log(error);
+
+            defer.reject(error);
+          });
+
+          return defer.promise;
+        },
+        getLogoutReasonCodes: function () {
+          var defer = $q.defer();
+
+          var domain = localStorageService.get(CONFIG.AUTH.DOMAIN);
+          var userID = localStorageService.get(CONFIG.AUTH.USER_ID);
+          var authorization = localStorageService.get(CONFIG.AUTH.TOKEN);
+
+          var url = 'https://' + domain + '/finesse/api/User/' + userID + '/ReasonCodes?category=LOGOUT';
+
+          // To test with fake json, comment headers and transformResponse properties
+          //var url = './test/logoutReasonCodes.json';
+
+          var req = {
+            method: 'GET',
+            url: url,
+            headers: {
+              'Authorization': 'Basic ' + authorization,
+            },
+            transformResponse: function (data, headersGetter, status) {
+
+              //Transform xml to json and return
+              var x2js = new X2JS();
+              var xmlText = data;
+              var jsonObj = x2js.xml_str2json(xmlText);
+
+              return jsonObj;
+            }
+          };
+
+          $http(req).then(function (response) {
+
+            if(response.data && response.data.ReasonCodes && response.data.ReasonCodes.ReasonCode && response.data.ReasonCodes.ReasonCode.length !== 0) {
+              defer.resolve(response.data.ReasonCodes.ReasonCode);
+            } else {
+              defer.resolve(null);
+            }
           }, function (error) {
             console.log(error);
 
@@ -188,15 +226,17 @@ angular.module('SMA.factories', [])
         changeAgentState: function (state, reasonCodeId) {
           var defer = $q.defer();
 
-          var domain = localStorageService.get('DOMAIN');
-          var userID = localStorageService.get('USER_ID');
-          var authorization = localStorageService.get('AUTH_TOKEN');
+          var domain = localStorageService.get(CONFIG.AUTH.DOMAIN);
+          var userID = localStorageService.get(CONFIG.AUTH.USER_ID);
+          var authorization = localStorageService.get(CONFIG.AUTH.TOKEN);
 
-          var url = 'http://' + domain + '/finesse/api/User/' + userID;
+          var url = 'https://' + domain + '/finesse/api/User/' + userID;
           var dataXML = null;
 
           if (state.indexOf('NOT_READY') !== -1 && reasonCodeId !== null) {
             dataXML = '<User><id>' + userID + '</id><state>NOT_READY</state><reasonCodeId>' + reasonCodeId + '</reasonCodeId></User>';
+          } else if(state.indexOf('LOGOUT') !== -1 && reasonCodeId !== null) {
+            dataXML = '<User><state>LOGOUT</state><reasonCodeId>' + reasonCodeId + '</reasonCodeId><logoutAllMedia>true</logoutAllMedia> </User>'
           } else {
             dataXML = '<User><id>' + userID + '</id><state>' + state + '</state></User>'
           }
@@ -212,10 +252,8 @@ angular.module('SMA.factories', [])
           };
 
           $http(req).then(function (response, status, headers, config) {
-            console.log(response);
 
             defer.resolve(response);
-
           }, function (error) {
             console.log(error);
 
@@ -227,12 +265,12 @@ angular.module('SMA.factories', [])
         makeACall: function (toNumber) {
           var defer = $q.defer();
 
-          var domain = localStorageService.get('DOMAIN');
-          var userID = localStorageService.get('USER_ID');
-          var authorization = localStorageService.get('AUTH_TOKEN');
-          var extension = localStorageService.get('EXTENSION');
+          var domain = localStorageService.get(CONFIG.AUTH.DOMAIN);
+          var userID = localStorageService.get(CONFIG.AUTH.USER_ID);
+          var authorization = localStorageService.get(CONFIG.AUTH.TOKEN);
+          var extension = localStorageService.get(CONFIG.AUTH.EXTENSION);
 
-          var url = 'http://' + domain + '/finesse/api/User/' + userID + '/Dialogs';
+          var url = 'https://' + domain + '/finesse/api/User/' + userID + '/Dialogs';
 
           var req = {
             method: 'POST',
@@ -245,10 +283,8 @@ angular.module('SMA.factories', [])
           };
 
           $http(req).then(function (response) {
-            console.log(response);
 
             defer.resolve(response);
-
           }, function (error) {
             console.log(error);
 
@@ -260,11 +296,13 @@ angular.module('SMA.factories', [])
         getDialogID: function () {
           var defer = $q.defer();
 
-          var domain = localStorageService.get('DOMAIN');
-          var userID = localStorageService.get('USER_ID');
-          var authorization = localStorageService.get('AUTH_TOKEN');
+          var domain = localStorageService.get(CONFIG.AUTH.DOMAIN);
+          var userID = localStorageService.get(CONFIG.AUTH.USER_ID);
+          var authorization = localStorageService.get(CONFIG.AUTH.TOKEN);
 
-          var url = 'http://' + domain + '/finesse/api/User/' + userID + '/Dialogs';
+          var url = 'https://' + domain + '/finesse/api/User/' + userID + '/Dialogs';
+
+          // To test with fake json, comment headers and transformResponse properties
           //var url = './test/dialog.json';
 
           var req = {
@@ -286,8 +324,13 @@ angular.module('SMA.factories', [])
 
           $http(req).then(function (response) {
 
-            defer.resolve(response.data.Dialogs.Dialog.id);
+            if(response.data && response.data.Dialogs && response.data.Dialogs.length !== 0) {
+              defer.resolve(response.data.Dialogs.Dialog.id);
+            } else {
+              defer.resolve(null);
+            }
           }, function (error) {
+            console.log(error);
 
             defer.reject(error);
           });
@@ -297,11 +340,10 @@ angular.module('SMA.factories', [])
         answerCall: function (dialogID) {
           var defer = $q.defer();
 
-          var domain = localStorageService.get('DOMAIN');
-          var authorization = localStorageService.get('AUTH_TOKEN');
-          var extension = localStorageService.get('EXTENSION');
+          var domain = localStorageService.get(CONFIG.AUTH.DOMAIN);
+          var authorization = localStorageService.get(CONFIG.AUTH.TOKEN);
 
-          var url = 'http://' + domain + '/finesse/api/Dialog/' + dialogID;
+          var url = 'https://' + domain + '/finesse/api/Dialog/' + dialogID;
 
           var req = {
             method: 'PUT',
@@ -314,7 +356,6 @@ angular.module('SMA.factories', [])
           };
 
           $http(req).then(function (response) {
-            console.log(response);
 
             defer.resolve(response);
           }, function (error) {
@@ -328,11 +369,11 @@ angular.module('SMA.factories', [])
         endCall: function (dialogID) {
           var defer = $q.defer();
 
-          var domain = localStorageService.get('DOMAIN');
-          var authorization = localStorageService.get('AUTH_TOKEN');
-          var extension = localStorageService.get('EXTENSION');
+          var domain = localStorageService.get(CONFIG.AUTH.DOMAIN);
+          var authorization = localStorageService.get(CONFIG.AUTH.TOKEN);
+          var extension = localStorageService.get(CONFIG.AUTH.EXTENSION);
 
-          var url = 'http://' + domain + '/finesse/api/Dialog/' + dialogID;
+          var url = 'https://' + domain + '/finesse/api/Dialog/' + dialogID;
 
           var req = {
             method: 'PUT',
@@ -345,7 +386,6 @@ angular.module('SMA.factories', [])
           };
 
           $http(req).then(function (response) {
-            console.log(response);
 
             defer.resolve(response);
           }, function (error) {
@@ -359,38 +399,40 @@ angular.module('SMA.factories', [])
         getListOfQueues: function() {
           var defer = $q.defer();
 
-          var domain = localStorageService.get('DOMAIN');
-          var authorization = localStorageService.get('AUTH_TOKEN');
-          var userID = localStorageService.get('USER_ID');
+          var domain = localStorageService.get(CONFIG.AUTH.DOMAIN);
+          var authorization = localStorageService.get(CONFIG.AUTH.TOKEN);
+          var userID = localStorageService.get(CONFIG.AUTH.USER_ID);
 
-          var url = 'http://' + domain + '/finesse/api/User/' + userID + '/Queues';
+          var url = 'https://' + domain + '/finesse/api/User/' + userID + '/Queues';
 
-          // Test with local json file
+          // To test with fake json, comment headers and transformResponse properties
+          //var url = './test/queues.json';
+
           var req = {
             method: 'GET',
-            url: './test/queues.json'
-          }
+            url: url,
+            headers: {
+              'Authorization': 'Basic ' + authorization,
+              'Content-Type': 'application/xml'
+            },
+            transformResponse: function (data, headersGetter, status) {
 
-          //var req = {
-          //  method: 'GET',
-          //  url: url,
-          //  headers: {
-          //    'Authorization': 'Basic ' + authorization,
-          //    'Content-Type': 'application/xml'
-          //  },
-          //  transformResponse: function (data, headersGetter, status) {
-          //
-          //    //Transform xml to json and return
-          //    var x2js = new X2JS();
-          //    var xmlText = data;
-          //    var jsonObj = x2js.xml_str2json(xmlText);
-          //
-          //    return jsonObj;
-          //  }
-          //};
+              //Transform xml to json and return
+              var x2js = new X2JS();
+              var xmlText = data;
+              var jsonObj = x2js.xml_str2json(xmlText);
+
+              return jsonObj;
+            }
+          };
 
           $http(req).then(function (response) {
-            defer.resolve(response.data.Queues.Queue);
+
+            if(response.data && response.data.Queues && response.data.Queues.Queue && response.data.Queues.Queue.length !== 0) {
+              defer.resolve(response.data.Queues.Queue);
+            } else {
+              defer.resolve(null);
+            }
           }, function (error) {
             console.log(error);
 

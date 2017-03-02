@@ -1,22 +1,22 @@
 <ion-view hide-nav-bar="true">
   <ion-content has-bouncing="false" class="my-background">
-    <form ng-submit="login(userId, pw, ip, extension, selectedConnectionMode, phone)">
+    <form name="loginForm" ng-submit="signIn(userID, pw, ip, extension, selectedConnectionMode, phone)">
         <div class="list list-inset list-borderless" style="background:none;">
-          <div class="item item-avatar" style="background:none; margin-left: 80px;">
+          <div class="item item-avatar" style="background:none;">
               <img src="./img/logo.png" style="top:38px;">
               <h1 style="color:black;">SMA</h1>
           </div>
           <label class="item item-input item-stacked-label">
-            <input type="text" placeholder="Agent ID" ng-model="userID">
+            <input type="text" placeholder="Agent ID" ng-model="userID" required>
           </label>
           <label class="item item-input item-stacked-label">
-            <input type="password" placeholder="Password" ng-model="pw">
+            <input type="password" placeholder="Password" ng-model="pw" required>
           </label>
           <label class="item item-input item-stacked-label">
-            <input type="text" placeholder="IP address or url" ng-model="ip">
+            <input type="text" placeholder="IP address or url" ng-model="ip" required>
           </label>
           <label class="item item-input item-stacked-label">
-            <input type="number" placeholder="Extension Number" ng-model="extension">
+            <input type="number" placeholder="Extension Number" ng-model="extension" required>
           </label>
           <ion-toggle class="item-stacked-label light" ng-model="signInAsAgent.isTurnedOn">Sign in as a Mobile Agent</ion-toggle>
           <div ng-show="signInAsAgent.isTurnedOn">
@@ -36,13 +36,14 @@
             </div>
 
             <label class="item item-input item-stacked-label item-dark">
-              <input type="text" placeholder="Phone Number" ng-model="phone">
+              <input type="number" placeholder="Phone Number" ng-model="phone">
             </label>
           </div>
 
           <div class="item item-input item-stacked-label">
             <button type="submit"
-                    class="button button-block icon-left ion-log-in">
+                    class="button button-block icon-left ion-log-in"
+                    ng-disabled="!loginForm.$valid">
               Sign in
             </button>
           </div>

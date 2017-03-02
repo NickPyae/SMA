@@ -1,0 +1,21 @@
+{
+  "ReasonCodes": {
+    "-category": "LOGOUT",
+    "ReasonCode": [
+      {
+        "uri": "/finesse/api/ReasonCode/6",
+        "category": "LOGOUT",
+        "code": "98",
+        "label": "Lunch",
+        "forAll": "true"
+      },
+      {
+        "uri": "/finesse/api/ReasonCode/5",
+        "category": "LOGOUT",
+        "code": "99",
+        "label": "End of shift",
+        "forAll": "true"
+      }
+    ]
+  }
+}

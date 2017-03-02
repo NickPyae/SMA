@@ -1,0 +1,21 @@
+{
+  "User": {
+    "dialogs": "/finesse/api/User/1072/Dialogs",
+    "extension": "1022",
+    "firstName": "Croften",
+    "lastName": "Hegarty",
+    "loginId": "1072",
+    "loginName": "chegarty",
+    "mobileAgent": {
+      "dialNumber": "1072",
+      "mode": "NAILED_CONNECTION"
+    },
+    "roles": { "role": "Agent" },
+    "settings": { "wrapUpOnIncoming": "OPTIONAL" },
+    "state": "TALKING",
+    "stateChangeTime": "2017-03-01T04:16:08.114Z",
+    "teamId": "5001",
+    "teamName": "Super4G",
+    "uri": "/finesse/api/User/1072"
+  }
+}

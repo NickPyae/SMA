@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in factories.js
 // 'starter.controllers' is found in controllers.js
-angular.module('SMA', ['ionic', 'LocalStorageModule',
+angular.module('SMA', ['ionic', 'LocalStorageModule', 'SMA.constants',
   'SMA.controllers', 'SMA.factories'])
 
 .run(function($ionicPlatform) {

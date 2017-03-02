@@ -13,28 +13,13 @@
             style="font-size: 0.7em;"
             ng-style="{'color': statusColor}"
             ng-init="selectedUserState"
-            ng-options="userState.label for userState in userStates"
+            ng-options="userState.label for userState in defaultUserStates"
             ng-model="selectedUserState"
             ng-change="onSelectUserStateChange(selectedUserState)">
           </select>
         </li>
       </div>
-      <div class="row">
-        <div class="col">
-          <button ng-click="answerCall()"
-                  class="button button-block icon-left ion-android-call button-dark">
-            Answer Call
-          </button>
-        </div>
-        <div class="col">
-          <button ng-click="endCall()"
-                  class="button button-block icon-left ion-android-call button-dark">
-            End Call
-          </button>
-        </div>
-      </div>
-
-      <ion-scroll style="height: 370px; margin-top: -20px;">
+      <ion-scroll style="height: 370px; margin-top: -20px;" ng-if="queues.length !== 0">
         <div class="card" ng-repeat="queue in queues">
           <div class="item item-divider survey-status">
             {{queue.name}}
@@ -44,6 +29,20 @@
           </div>
         </div>
       </ion-scroll>
+      <div class="row">
+        <div class="col" ng-if="isUserInTalkingState() === false">
+          <button ng-click="answerCall()"
+                  class="button button-block icon-left ion-android-call button-dark">
+            Answer Call
+          </button>
+        </div>
+        <div class="col" ng-if="isUserInTalkingState() === true">
+          <button ng-click="endCall()"
+                  class="button button-block icon-left ion-android-call button-dark">
+            End Call
+          </button>
+        </div>
+      </div>
     </div>
     </div>
   </ion-content>

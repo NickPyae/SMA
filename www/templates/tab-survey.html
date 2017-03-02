@@ -3,17 +3,17 @@
     <div class="padding">
       <label class="item item-input">
         <span class="input-label"><b>Phone Number</b></span>
-        <input type="text" placeholder="+65" ng-model="phone">
+        <input type="number" placeholder="" ng-model="phone">
       </label>
     </div>
     <div class="row">
-      <div class="col">
+      <div class="col" ng-if="isUserInTalkingState() === false">
         <button ng-click="makeACall(phone)"
                 class="button button-block icon-left ion-android-call button-dark">
           Call
         </button>
       </div>
-      <div class="col">
+      <div class="col" ng-if="isUserInTalkingState() === true">
         <button ng-click="endCall()"
                 class="button button-block icon-left ion-android-call button-dark">
           End Call
